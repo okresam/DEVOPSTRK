@@ -1,5 +1,5 @@
 <template>
-    <div class="flex flex-auto items-center justify-center min-h-screen bg-gray-100">
+    <div class="flex flex-auto items-center justify-center min-h-screen bg-gray-300">
         <div class="px-8 py-6 mt-4 text-left bg-white shadow-lg">
             <div class="flex justify-center">
                 <img src="devops.png" class="w-12 h-12" />
