@@ -9,7 +9,7 @@
             <div v-if="$store.state.user">
                 <div class="p-2 mx-5">
                     <div class="flex flex-row">
-                        Home
+                        <p class="font-bold">Korisnik: {{ $store.state.user.ime }} {{ $store.state.user.prezime }}</p>
                     </div>
                 </div>
                 <div class="p-2 mx-5">
@@ -19,7 +19,7 @@
                 </div>
                 <div class="p-2 mx-5">
                     <div class="flex flex-row">
-                        <button class="bg-gray-900" @click="logout">Odjavi se</button>
+                        <button class="bg-red-900" @click="logout">Odjavi se</button>
                     </div>
                 </div>
             </div>

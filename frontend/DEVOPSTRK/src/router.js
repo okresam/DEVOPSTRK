@@ -1,18 +1,19 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import Home from './components/Home.vue'
 import Login from './components/Login.vue'
+import Projekti from './components/Projekti.vue'
 import Register from './components/Register.vue'
 import store from "./store.js"
 
 const routes = [
     {
         path: '/',
-        redirect: '/Home'
+        redirect: '/Projekti'
     },
     {
-        path: '/Home',
-        name: 'Home',
-        component: Home
+        path: '/Projekti',
+        name: 'Projekti',
+        component: Projekti
     },
     {
         path: '/login',
@@ -26,7 +27,7 @@ const routes = [
     },
     {
         path: '/:catchAll(.*)',
-        redirect: '/Home'
+        redirect: '/Projekti'
     }
 ]
 
@@ -41,7 +42,7 @@ router.beforeEach(async (to, from) => {
     }
 
     if (store.state.user && (to.name === 'Login' || to.name === 'Register')) {
-        return { name: 'Home' }
+        return { name: 'Projekti' }
     }
 })
 

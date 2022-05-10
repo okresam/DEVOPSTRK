@@ -49,7 +49,7 @@ export default {
         async submit() {
             await axios.post(SPRING_URL.concat('/korisnik/login'), this.user)
             .then(response => {
-                this.$store.state.user = JSON.stringify(response.data);
+                this.$store.state.user = response.data;
                 sessionStorage.setItem("user", JSON.stringify(response.data));
                 this.$router.push("/")
             })
