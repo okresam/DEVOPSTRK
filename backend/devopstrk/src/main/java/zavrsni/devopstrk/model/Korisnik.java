@@ -1,30 +1,43 @@
 package zavrsni.devopstrk.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+import javax.persistence.*;
 
 @Entity
 @Table(name = "korisnik")
 public class Korisnik {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "idkorisnika")
     private Long idKorisnika;
 
+    @Column(nullable = false)
     private String ime;
 
+    @Column(nullable = false)
     private String prezime;
 
+    @Column(unique = true, nullable = false)
     private String email;
 
+    @Column(nullable = false)
     private String lozinka;
 
-    private Boolean isVerified;
+    @Column(name = "isverified", nullable = false)
+    private boolean isVerified;
 
     public Korisnik() {
 
+    }
+
+    public Korisnik(String ime, String prezime, String email, String lozinka, boolean isVerified) {
+        this.ime = ime;
+        this.prezime = prezime;
+        this.email = email;
+        this.lozinka = lozinka;
+        this.isVerified = isVerified;
     }
 
     public String getIme() {
@@ -63,11 +76,11 @@ public class Korisnik {
         this.lozinka = lozinka;
     }
 
-    public Boolean getVerified() {
+    public boolean getVerified() {
         return isVerified;
     }
 
-    public void setVerified(Boolean verified) {
+    public void setVerified(boolean verified) {
         isVerified = verified;
     }
 }
