@@ -1,2 +1,7 @@
+/home/marko/Desktop/DEVOPSTRK/backend/devopstrk/src/main/java/zavrsni/devopstrk/controller/dto/CreateKorisnikDTO.java
+/home/marko/Desktop/DEVOPSTRK/backend/devopstrk/src/main/java/zavrsni/devopstrk/service/KorisnikService.java
+/home/marko/Desktop/DEVOPSTRK/backend/devopstrk/src/main/java/zavrsni/devopstrk/controller/KorisnikController.java
 /home/marko/Desktop/DEVOPSTRK/backend/devopstrk/src/main/java/zavrsni/devopstrk/DevopstrkApplication.java
+/home/marko/Desktop/DEVOPSTRK/backend/devopstrk/src/main/java/zavrsni/devopstrk/service/impl/KorisnikServiceJpa.java
+/home/marko/Desktop/DEVOPSTRK/backend/devopstrk/src/main/java/zavrsni/devopstrk/repository/KorisnikRepository.java
 /home/marko/Desktop/DEVOPSTRK/backend/devopstrk/src/main/java/zavrsni/devopstrk/model/Korisnik.java

@@ -1,2 +1,7 @@
-zavrsni/devopstrk/DevopstrkApplication.class
+zavrsni/devopstrk/controller/dto/CreateKorisnikDTO.class
 zavrsni/devopstrk/model/Korisnik.class
+zavrsni/devopstrk/controller/KorisnikController.class
+zavrsni/devopstrk/DevopstrkApplication.class
+zavrsni/devopstrk/repository/KorisnikRepository.class
+zavrsni/devopstrk/service/impl/KorisnikServiceJpa.class
+zavrsni/devopstrk/service/KorisnikService.class

@@ -7,6 +7,10 @@ import store from "./store.js"
 const routes = [
     {
         path: '/',
+        redirect: '/Home'
+    },
+    {
+        path: '/Home',
         name: 'Home',
         component: Home
     },
@@ -19,6 +23,10 @@ const routes = [
         path: '/register',
         name: 'Register',
         component: Register
+    },
+    {
+        path: '/:catchAll(.*)',
+        redirect: '/Home'
     }
 ]
 
@@ -27,9 +35,13 @@ const router = createRouter({
     routes
 })
 
-router.beforeEach(async (to, from) => {
-    if (!store.state.isLoggedIn && to.name !== 'Login' && to.name !== 'Register') {
+router.beforeEach(async (to, from) => { 
+    if (!store.state.user && to.name !== 'Login' && to.name !== 'Register') {
         return { name: 'Login' }
+    }
+
+    if (store.state.user && (to.name === 'Login' || to.name === 'Register')) {
+        return { name: 'Home' }
     }
 })
 
