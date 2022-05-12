@@ -8,6 +8,7 @@ import zavrsni.devopstrk.repository.KorisnikRepository;
 import zavrsni.devopstrk.service.KorisnikService;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class KorisnikServiceJpa implements KorisnikService {
@@ -25,5 +26,10 @@ public class KorisnikServiceJpa implements KorisnikService {
         Assert.notNull(korisnik, "Mora se predati korisnik!");
         Assert.isNull(korisnik.getIdKorisnika(), "Id korisnika mora biti null!");
         return korisnikRepo.save(korisnik);
+    }
+
+    @Override
+    public Optional<Korisnik> fetch(String email) {
+        return korisnikRepo.findByEmail(email);
     }
 }

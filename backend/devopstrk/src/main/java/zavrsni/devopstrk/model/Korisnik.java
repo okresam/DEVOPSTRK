@@ -3,6 +3,7 @@ package zavrsni.devopstrk.model;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @Entity
 @Table(name = "korisnik")
@@ -28,6 +29,12 @@ public class Korisnik {
     @Column(name = "isverified", nullable = false)
     private boolean isVerified;
 
+    @Column(name = "aktivacijskikod")
+    private String aktivacijskiKod;
+
+    @OneToMany(mappedBy = "korisnik")
+    Set<SudjelujeNa> sudjelujeNa;
+
     public Korisnik() {
 
     }
@@ -38,6 +45,15 @@ public class Korisnik {
         this.email = email;
         this.lozinka = lozinka;
         this.isVerified = isVerified;
+    }
+
+    public Korisnik(String ime, String prezime, String email, String lozinka, boolean isVerified, String aktivacijskiKod) {
+        this.ime = ime;
+        this.prezime = prezime;
+        this.email = email;
+        this.lozinka = lozinka;
+        this.isVerified = isVerified;
+        this.aktivacijskiKod = aktivacijskiKod;
     }
 
     public String getIme() {
@@ -82,5 +98,13 @@ public class Korisnik {
 
     public void setVerified(boolean verified) {
         isVerified = verified;
+    }
+
+    public String getAktivacijskiKod() {
+        return aktivacijskiKod;
+    }
+
+    public void setAktivacijskiKod(String aktivacijskiKod) {
+        this.aktivacijskiKod = aktivacijskiKod;
     }
 }
