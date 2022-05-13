@@ -1,6 +1,5 @@
 package zavrsni.devopstrk.service;
 
-import zavrsni.devopstrk.model.Korisnik;
 import zavrsni.devopstrk.model.Stanje;
 
 import java.util.List;
