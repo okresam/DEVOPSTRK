@@ -1,5 +1,6 @@
 package zavrsni.devopstrk.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.persistence.*;
@@ -32,8 +33,12 @@ public class Korisnik {
     @Column(name = "aktivacijskikod")
     private String aktivacijskiKod;
 
+    @JsonManagedReference
+    @OneToMany(mappedBy = "voditelj")
+    private Set<Projekt> mojiProjekti;
+
     @OneToMany(mappedBy = "korisnik")
-    Set<SudjelujeNa> sudjelujeNa;
+    private Set<SudjelujeNa> sudjelujeNa;
 
     public Korisnik() {
 
@@ -106,5 +111,21 @@ public class Korisnik {
 
     public void setAktivacijskiKod(String aktivacijskiKod) {
         this.aktivacijskiKod = aktivacijskiKod;
+    }
+
+    public Set<Projekt> getMojiProjekti() {
+        return mojiProjekti;
+    }
+
+    public void setMojiProjekti(Set<Projekt> mojiProjekti) {
+        this.mojiProjekti = mojiProjekti;
+    }
+
+    public Set<SudjelujeNa> getSudjelujeNa() {
+        return sudjelujeNa;
+    }
+
+    public void setSudjelujeNa(Set<SudjelujeNa> sudjelujeNa) {
+        this.sudjelujeNa = sudjelujeNa;
     }
 }

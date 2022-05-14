@@ -8,10 +8,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
-import zavrsni.devopstrk.controller.dto.CreateKorisnikDTO;
-import zavrsni.devopstrk.controller.dto.JwtResponse;
-import zavrsni.devopstrk.controller.dto.LoginKorisnikDTO;
-import zavrsni.devopstrk.controller.dto.MessageResponse;
+import zavrsni.devopstrk.controller.dto.*;
 import zavrsni.devopstrk.model.Korisnik;
 import zavrsni.devopstrk.security.jwt.JwtUtils;
 import zavrsni.devopstrk.security.services.UserDetailsImpl;
@@ -64,5 +61,11 @@ public class KorisnikController {
                 userDetails.getPrezime(),
                 userDetails.getUsername())
         );
+    }
+
+    @CrossOrigin("*")
+    @PostMapping("/mojiProjekti")
+    public ResponseEntity<?> getMojiProjekti(@RequestBody IdDTO dto) {
+        return ResponseEntity.ok(korisnikService.fetch(dto.getId()).get().getMojiProjekti());
     }
 }

@@ -1,5 +1,7 @@
 package zavrsni.devopstrk.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import javax.persistence.*;
 import java.util.Set;
 
@@ -28,6 +30,7 @@ public class Projekt {
     @JoinColumn(name = "idstanja")
     public Stanje stanje;
 
+    @JsonBackReference
     @ManyToOne(optional = false)
     @JoinColumn(name = "idvoditelja")
     public Korisnik voditelj;

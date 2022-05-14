@@ -14,7 +14,12 @@
                 </div>
                 <div class="p-2 mx-5">
                     <div class="flex flex-row">
-                        Projekti
+                        Moji projekti
+                    </div>
+                </div>
+                <div class="p-2 mx-5">
+                    <div class="flex flex-row">
+                        Svi projekti
                     </div>
                 </div>
                 <div class="p-2 mx-5">
