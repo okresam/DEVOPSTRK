@@ -103,4 +103,12 @@ public class Projekt {
     public void setVoditelj(Korisnik voditelj) {
         this.voditelj = voditelj;
     }
+
+    public Set<SudjelujeNa> getSudjelujeNa() {
+        return sudjelujeNa;
+    }
+
+    public void setSudjelujeNa(Set<SudjelujeNa> sudjelujeNa) {
+        this.sudjelujeNa = sudjelujeNa;
+    }
 }

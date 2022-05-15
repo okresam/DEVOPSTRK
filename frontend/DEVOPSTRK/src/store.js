@@ -7,7 +7,9 @@ const vuexLocal = new VuexPersistence({
 
 const store = createStore({
     state: {
-        user: undefined
+        user: undefined,
+        trenutniProjekt: undefined,
+        projektInfoPage: 1
     },
     getters: {
         

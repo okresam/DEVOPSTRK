@@ -10,4 +10,6 @@ import java.util.List;
 public interface SudjelujeNaRepository extends JpaRepository<SudjelujeNa, SudjelujeNaKljuc> {
 
     List<SudjelujeNa> findById_IdKorisnika(Long idKorisnika);
+
+    List<SudjelujeNa> findById_IdProjekta(Long idProjekta);
 }

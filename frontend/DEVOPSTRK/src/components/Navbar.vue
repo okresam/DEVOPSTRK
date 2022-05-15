@@ -14,17 +14,30 @@
                 </div>
                 <div class="p-2 mx-5">
                     <div class="flex flex-row">
-                        Moji projekti
+                        <router-link to="/Projekti" class="hover:text-gray-800">Projekti</router-link>
+                    </div>
+                </div>
+                <div v-if="$store.state.trenutniProjekt">
+                    <div class="p-2 mx-5">
+                        <div class="flex flex-row">
+                            <p class="font-bold">Projekt: {{ $store.state.trenutniProjekt.nazivProjekta }}</p>
+                        </div>
+                    </div>
+                    <div class="p-2 mx-5">
+                        <div class="flex flex-row">
+                            <p @click="$store.state.projektInfoPage = 1" class="hover:text-gray-800 hover:cursor-pointer">O projektu</p>
+                        </div>
+                    </div>
+                    <div class="p-2 mx-5">
+                        <div class="flex flex-row">
+                            <p @click="$store.state.projektInfoPage = 2" class="hover:text-gray-800 hover:cursor-pointer">Sudionici</p>
+                        </div>
                     </div>
                 </div>
                 <div class="p-2 mx-5">
                     <div class="flex flex-row">
-                        Svi projekti
-                    </div>
-                </div>
-                <div class="p-2 mx-5">
-                    <div class="flex flex-row">
-                        <button class="bg-red-900" @click="logout">Odjavi se</button>
+                        <button class="px-6 py-2 mt-4 text-white bg-red-600 rounded-lg hover:bg-red-700"
+                            @click="logout">Odjavi se</button>
                     </div>
                 </div>
             </div>
@@ -46,9 +59,9 @@
 <script>
 export default {
     data() {
-       return {
+        return {
 
-       } 
+        }
     },
     methods: {
         async logout() {

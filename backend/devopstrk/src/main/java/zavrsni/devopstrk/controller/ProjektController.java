@@ -11,6 +11,7 @@ import zavrsni.devopstrk.model.SudjelujeNa;
 import zavrsni.devopstrk.model.util.SudjelujeNaKljuc;
 import zavrsni.devopstrk.service.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -89,5 +90,17 @@ public class ProjektController {
         projektService.updateProjekt(projekt);
 
         return ResponseEntity.ok(new MessageResponse("Projekt izmjenjen!"));
+    }
+
+    @CrossOrigin("*")
+    @PostMapping("/sudionici")
+    public ResponseEntity<?> getSudionici(@RequestBody IdDTO dto) {
+        List<SudionikDTO> sudionici = new ArrayList<>();
+
+        for (SudjelujeNa sn : projektService.fetch(Long.parseLong(dto.getId())).getSudjelujeNa()) {
+            sudionici.add(new SudionikDTO(sn.getKorisnik().getIme(), sn.getKorisnik().getPrezime(), sn.getKorisnik().getEmail(), sn.getUloga()));
+        }
+
+        return ResponseEntity.ok(sudionici);
     }
 }

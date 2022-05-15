@@ -11,4 +11,6 @@ public interface SudjelujeNaService {
     SudjelujeNa createSudjelujeNa(SudjelujeNa sudjelujeNa);
 
     List<SudjelujeNa> findByIdKorisnika(Long idKorisnika);
+
+    List<SudjelujeNa> findByIdProjekta(Long idProjekta);
 }

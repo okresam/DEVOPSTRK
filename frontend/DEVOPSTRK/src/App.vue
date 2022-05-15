@@ -17,6 +17,10 @@ export default {
     if (sessionStorage.getItem("user") ) {
       this.$store.state.user = JSON.parse(sessionStorage.getItem("user"))
     }
+
+    if (sessionStorage.getItem("trenutniProjekt") ) {
+      this.$store.state.trenutniProjekt = JSON.parse(sessionStorage.getItem("trenutniProjekt"))
+    }
   }
 }
 

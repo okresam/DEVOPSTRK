@@ -64,7 +64,7 @@
                                     class="px-6 py-2 mt-4 mr-4 text-white bg-blue-600 rounded-lg hover:bg-blue-900">
                                     Uredi
                                 </button>
-                                <button class="px-6 py-2 mt-4 text-white bg-cyan-600 rounded-lg hover:bg-cyan-900">
+                                <button @click="odaberiProjekt(p)" class="px-6 py-2 mt-4 text-white bg-cyan-600 rounded-lg hover:bg-cyan-900">
                                     Odaberi
                                 </button>
                             </div>
@@ -218,6 +218,12 @@ export default {
             this.isDodajVisible = true;
             this.stanja = await RequestHandler.getRequest(SPRING_URL.concat('/stanje/all'))
             this.stanjeProjekta = projektInfo.stanje.idStanja
+        },
+        odaberiProjekt(projektInfo) {
+            sessionStorage.setItem('trenutniProjekt', JSON.stringify(projektInfo))
+            this.$store.state.trenutniProjekt = projektInfo
+            this.$store.state.projektInfoPage = 1
+            this.$router.push('/ProjektInfo')
         }
     }
 }

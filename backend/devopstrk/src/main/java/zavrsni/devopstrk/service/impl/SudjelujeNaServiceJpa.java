@@ -28,4 +28,11 @@ public class SudjelujeNaServiceJpa implements SudjelujeNaService {
     public List<SudjelujeNa> findByIdKorisnika(Long idKorisnika) {
         return sudjelujeNaRepository.findById_IdKorisnika(idKorisnika);
     }
+
+    @Override
+    public List<SudjelujeNa> findByIdProjekta(Long idProjekta) {
+        return sudjelujeNaRepository.findById_IdProjekta(idProjekta);
+    }
+
+
 }
