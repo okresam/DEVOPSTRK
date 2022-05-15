@@ -35,7 +35,8 @@ public class Projekt {
     @JoinColumn(name = "idvoditelja")
     public Korisnik voditelj;
 
-    @OneToMany(mappedBy = "projekt")
+    @JsonBackReference
+    @OneToMany(mappedBy = "projekt", cascade = CascadeType.REMOVE)
     Set<SudjelujeNa> sudjelujeNa;
 
     public Projekt() {

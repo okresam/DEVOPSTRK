@@ -23,4 +23,9 @@ public class SudjelujeNaServiceJpa implements SudjelujeNaService {
     public SudjelujeNa createSudjelujeNa(SudjelujeNa sudjelujeNa) {
         return sudjelujeNaRepository.save(sudjelujeNa);
     }
+
+    @Override
+    public List<SudjelujeNa> findByIdKorisnika(Long idKorisnika) {
+        return sudjelujeNaRepository.findById_IdKorisnika(idKorisnika);
+    }
 }

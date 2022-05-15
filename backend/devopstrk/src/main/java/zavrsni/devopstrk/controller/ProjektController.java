@@ -3,11 +3,10 @@ package zavrsni.devopstrk.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import zavrsni.devopstrk.controller.dto.CreateKorisnikDTO;
-import zavrsni.devopstrk.controller.dto.CreateProjektDTO;
-import zavrsni.devopstrk.controller.dto.MessageResponse;
+import zavrsni.devopstrk.controller.dto.*;
 import zavrsni.devopstrk.model.Korisnik;
 import zavrsni.devopstrk.model.Projekt;
+import zavrsni.devopstrk.model.Stanje;
 import zavrsni.devopstrk.model.SudjelujeNa;
 import zavrsni.devopstrk.model.util.SudjelujeNaKljuc;
 import zavrsni.devopstrk.service.*;
@@ -62,4 +61,33 @@ public class ProjektController {
         return ResponseEntity.ok(new MessageResponse("Projekt dodan!"));
     }
 
+    @CrossOrigin("*")
+    @PostMapping("/delete")
+    public ResponseEntity<?> deleteProjekt(@RequestBody IdDTO dto) {
+        projektService.deleteByIdProjekta(Long.parseLong(dto.getId()));
+        return ResponseEntity.ok(new MessageResponse("Projekt obrisan!"));
+    }
+
+    @CrossOrigin("*")
+    @PostMapping("/getAllOtherProjekti")
+    public ResponseEntity<?> getAllOtherProjekti(@RequestBody IdDTO dto) {
+        return ResponseEntity.ok(sudjelujeNaService.findByIdKorisnika(Long.parseLong(dto.getId())));
+    }
+
+    @CrossOrigin("*")
+    @PostMapping("/edit")
+    public ResponseEntity<?> editProjekt(@RequestBody EditProjektDTO dto) {
+        Projekt projekt = projektService.fetch(Long.parseLong(dto.getIdProjekta()));
+        Stanje stanjeProjekta = stanjeService.findById(Long.parseLong(dto.getIdStanja())).get();
+
+        projekt.setNazivProjekta(dto.getNazivProjekta());
+        projekt.setOpisProjekta(dto.getOpisProjekta());
+        projekt.setDatumPocetka(dto.getDatumPocetka());
+        projekt.setDatumZavrsetka(dto.getDatumZavrsetka());
+        projekt.setStanje(stanjeProjekta);
+
+        projektService.updateProjekt(projekt);
+
+        return ResponseEntity.ok(new MessageResponse("Projekt izmjenjen!"));
+    }
 }

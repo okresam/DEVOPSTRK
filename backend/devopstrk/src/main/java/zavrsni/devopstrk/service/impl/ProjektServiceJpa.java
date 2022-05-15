@@ -26,4 +26,19 @@ public class ProjektServiceJpa implements ProjektService {
     public Projekt createProjekt(Projekt projekt) {
         return projektRepository.save(projekt);
     }
+
+    @Override
+    public void deleteByIdProjekta(Long idProjekta) {
+        projektRepository.deleteProjektByIdProjekta(idProjekta);
+    }
+
+    @Override
+    public Projekt fetch(Long idProjekta) {
+        return projektRepository.findById(idProjekta).get();
+    }
+
+    @Override
+    public void updateProjekt(Projekt projekt) {
+        projektRepository.save(projekt);
+    }
 }

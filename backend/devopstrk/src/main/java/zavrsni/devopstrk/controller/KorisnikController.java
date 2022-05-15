@@ -10,10 +10,13 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import zavrsni.devopstrk.controller.dto.*;
 import zavrsni.devopstrk.model.Korisnik;
+import zavrsni.devopstrk.model.Projekt;
+import zavrsni.devopstrk.model.SudjelujeNa;
 import zavrsni.devopstrk.security.jwt.JwtUtils;
 import zavrsni.devopstrk.security.services.UserDetailsImpl;
 import zavrsni.devopstrk.service.KorisnikService;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -67,5 +70,19 @@ public class KorisnikController {
     @PostMapping("/mojiProjekti")
     public ResponseEntity<?> getMojiProjekti(@RequestBody IdDTO dto) {
         return ResponseEntity.ok(korisnikService.fetch(dto.getId()).get().getMojiProjekti());
+    }
+
+    @CrossOrigin("*")
+    @PostMapping("/otherProjekti")
+    public ResponseEntity<?> getOtherProjekti(@RequestBody IdDTO dto) {
+        List<Projekt> otherProjekti = new ArrayList<>();
+
+        for (SudjelujeNa sn : korisnikService.fetch(dto.getId()).get().getSudjelujeNa()) {
+            if (!sn.getProjekt().getVoditelj().getEmail().equals(dto.getId())) {
+                otherProjekti.add(sn.getProjekt());
+            }
+        }
+
+        return ResponseEntity.ok(otherProjekti);
     }
 }

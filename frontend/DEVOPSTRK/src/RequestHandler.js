@@ -18,6 +18,23 @@ class RequestHandler {
         })
         return temp
     }
+
+    async getRequest(address) {
+        let temp
+        
+        await axios.get(address, {
+            headers: {
+                'Authorization': 'Bearer ' + JSON.parse(sessionStorage.getItem("user")).accessToken
+            }
+        })
+        .then(response => {
+            temp = response.data
+        })
+        .catch(e => {
+            temp = undefined
+        })
+        return temp
+    }
 }
 
 export default new RequestHandler()

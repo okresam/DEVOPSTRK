@@ -37,6 +37,7 @@ public class Korisnik {
     @OneToMany(mappedBy = "voditelj")
     private Set<Projekt> mojiProjekti;
 
+    @JsonManagedReference
     @OneToMany(mappedBy = "korisnik")
     private Set<SudjelujeNa> sudjelujeNa;
 

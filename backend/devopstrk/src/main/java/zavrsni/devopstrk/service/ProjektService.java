@@ -9,4 +9,10 @@ public interface ProjektService {
     List<Projekt> listAll();
 
     Projekt createProjekt(Projekt projekt);
+
+    void deleteByIdProjekta(Long idProjekta);
+
+    Projekt fetch(Long idProjekta);
+
+    void updateProjekt(Projekt projekt);
 }
