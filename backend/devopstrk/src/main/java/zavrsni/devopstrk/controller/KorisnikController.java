@@ -69,19 +69,51 @@ public class KorisnikController {
     @CrossOrigin("*")
     @PostMapping("/mojiProjekti")
     public ResponseEntity<?> getMojiProjekti(@RequestBody IdDTO dto) {
-        return ResponseEntity.ok(korisnikService.fetch(dto.getId()).get().getMojiProjekti());
+        List<ProjektInfoDTO> mojiProjekti = new ArrayList<>();
+
+        for (Projekt p : korisnikService.fetch(dto.getId()).get().getMojiProjekti()) {
+            mojiProjekti.add(new ProjektInfoDTO(
+                    p.getIdProjekta(),
+                    p.getNazivProjekta(),
+                    p.getOpisProjekta(),
+                    p.getDatumPocetka(),
+                    p.getDatumZavrsetka(),
+                    p.getStanje(),
+                    p.getVoditelj().getIdKorisnika()
+            ));
+        }
+
+        return ResponseEntity.ok(mojiProjekti);
+
+        //return ResponseEntity.ok(korisnikService.fetch(dto.getId()).get().getMojiProjekti());
     }
 
     @CrossOrigin("*")
     @PostMapping("/otherProjekti")
     public ResponseEntity<?> getOtherProjekti(@RequestBody IdDTO dto) {
-        List<Projekt> otherProjekti = new ArrayList<>();
+        List<ProjektInfoDTO> otherProjekti = new ArrayList<>();
+
+        for (SudjelujeNa sn : korisnikService.fetch(dto.getId()).get().getSudjelujeNa()) {
+            if (!sn.getProjekt().getVoditelj().getEmail().equals(dto.getId())) {
+                otherProjekti.add(new ProjektInfoDTO(
+                        sn.getProjekt().getIdProjekta(),
+                        sn.getProjekt().getNazivProjekta(),
+                        sn.getProjekt().getOpisProjekta(),
+                        sn.getProjekt().getDatumPocetka(),
+                        sn.getProjekt().getDatumZavrsetka(),
+                        sn.getProjekt().getStanje(),
+                        sn.getProjekt().getVoditelj().getIdKorisnika()
+                ));
+            }
+        }
+
+        /* List<Projekt> otherProjekti = new ArrayList<>();
 
         for (SudjelujeNa sn : korisnikService.fetch(dto.getId()).get().getSudjelujeNa()) {
             if (!sn.getProjekt().getVoditelj().getEmail().equals(dto.getId())) {
                 otherProjekti.add(sn.getProjekt());
             }
-        }
+        } */
 
         return ResponseEntity.ok(otherProjekti);
     }

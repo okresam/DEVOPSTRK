@@ -23,6 +23,9 @@
                 </div>
 
                 <div class="grid grid-flow-col auto-cols-max auto-rows-max">
+                    <div v-if="!projekti.length" class="text-gray-500 mx-5 my-5">
+                        Nema projekata za prikaz...
+                    </div>
                     <div v-for="p in projekti" class="px-5 py-5 md:max-w-96 md:min-w-32">
                         <div class="block p-6 max-w-sm bg-gray-300 rounded-lg border border-gray-200 shadow-md">
                             <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
@@ -64,7 +67,8 @@
                                     class="px-6 py-2 mt-4 mr-4 text-white bg-blue-600 rounded-lg hover:bg-blue-900">
                                     Uredi
                                 </button>
-                                <button @click="odaberiProjekt(p)" class="px-6 py-2 mt-4 text-white bg-cyan-600 rounded-lg hover:bg-cyan-900">
+                                <button @click="odaberiProjekt(p)"
+                                    class="px-6 py-2 mt-4 text-white bg-cyan-600 rounded-lg hover:bg-cyan-900">
                                     Odaberi
                                 </button>
                             </div>

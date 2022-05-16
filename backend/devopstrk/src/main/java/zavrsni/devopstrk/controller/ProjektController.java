@@ -13,6 +13,7 @@ import zavrsni.devopstrk.service.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/projekt")
@@ -102,5 +103,28 @@ public class ProjektController {
         }
 
         return ResponseEntity.ok(sudionici);
+    }
+
+    @CrossOrigin("*")
+    @PostMapping("/dodajSudionika")
+    public ResponseEntity<?> dodajSudionika(@RequestBody DodajSudionikaDTO dto) {
+        Optional<Korisnik> maybeKorisnik = korisnikService.fetch(dto.getEmailSudionika());
+
+        if (maybeKorisnik.isEmpty()) {
+            return ResponseEntity.badRequest().build();
+        }
+
+        Korisnik sudionik = maybeKorisnik.get();
+        Projekt projekt = projektService.fetch(Long.parseLong(dto.getIdProjekta()));
+
+
+        sudjelujeNaService.createSudjelujeNa(new SudjelujeNa(new SudjelujeNaKljuc(sudionik.getIdKorisnika(), projekt.getIdProjekta()),
+                        sudionik,
+                        projekt,
+                        ulogaService.findById(Long.parseLong(dto.getIdUlogeSudionika())).get()
+                )
+        );
+
+        return ResponseEntity.ok(new MessageResponse("Sudionik dodan!"));
     }
 }

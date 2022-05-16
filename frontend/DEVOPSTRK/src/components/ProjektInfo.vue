@@ -1,5 +1,5 @@
 <template>
-    <div class="flex-auto">
+    <div v-if="$store.state.trenutniProjekt" class="flex-auto">
         <div class="flex flex-col">
             <OProjektu v-if="$store.state.projektInfoPage === 1" />
             <Sudionici v-if="$store.state.projektInfoPage === 2" />

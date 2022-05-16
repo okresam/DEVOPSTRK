@@ -7,9 +7,9 @@
 
         <div class="flex flex-col flex-auto">
             <div v-if="$store.state.user">
-                <div class="p-2 mx-5">
-                    <div class="flex flex-row">
-                        <p class="font-bold">Korisnik: {{ $store.state.user.ime }} {{ $store.state.user.prezime }}</p>
+                <div class="p-2 mx-5 mt-5">
+                    <div class="flex flex-row bg-cyan-700 rounded-lg">
+                        <p class="font-bold px-3 py-3">Korisnik: {{ $store.state.user.ime }} {{ $store.state.user.prezime }}</p>
                     </div>
                 </div>
                 <div class="p-2 mx-5">
@@ -18,9 +18,9 @@
                     </div>
                 </div>
                 <div v-if="$store.state.trenutniProjekt">
-                    <div class="p-2 mx-5">
-                        <div class="flex flex-row">
-                            <p class="font-bold">Projekt: {{ $store.state.trenutniProjekt.nazivProjekta }}</p>
+                    <div class="p-2 mx-5 mt-5">
+                        <div class="flex flex-row bg-cyan-700 rounded-lg">
+                            <p class="font-bold px-3 py-3">Projekt: {{ $store.state.trenutniProjekt.nazivProjekta }}</p>
                         </div>
                     </div>
                     <div class="p-2 mx-5">
