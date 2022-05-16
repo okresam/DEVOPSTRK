@@ -41,6 +41,9 @@ public class Korisnik {
     @OneToMany(mappedBy = "korisnik")
     private Set<SudjelujeNa> sudjelujeNa;
 
+    @OneToMany(mappedBy = "izvrsitelj")
+    private Set<Zadatak> korisnikoviZadaci;
+
     public Korisnik() {
 
     }
@@ -128,5 +131,13 @@ public class Korisnik {
 
     public void setSudjelujeNa(Set<SudjelujeNa> sudjelujeNa) {
         this.sudjelujeNa = sudjelujeNa;
+    }
+
+    public Set<Zadatak> getKorisnikoviZadaci() {
+        return korisnikoviZadaci;
+    }
+
+    public void setKorisnikoviZadaci(Set<Zadatak> korisnikoviZadaci) {
+        this.korisnikoviZadaci = korisnikoviZadaci;
     }
 }

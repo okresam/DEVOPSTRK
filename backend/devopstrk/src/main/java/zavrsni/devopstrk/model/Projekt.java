@@ -39,6 +39,9 @@ public class Projekt {
     @OneToMany(mappedBy = "projekt", cascade = CascadeType.REMOVE)
     Set<SudjelujeNa> sudjelujeNa;
 
+    @OneToMany(mappedBy = "projekt")
+    private Set<Zadatak> projektZadaci;
+
     public Projekt() {
 
     }
@@ -110,5 +113,13 @@ public class Projekt {
 
     public void setSudjelujeNa(Set<SudjelujeNa> sudjelujeNa) {
         this.sudjelujeNa = sudjelujeNa;
+    }
+
+    public Set<Zadatak> getProjektZadaci() {
+        return projektZadaci;
+    }
+
+    public void setProjektZadaci(Set<Zadatak> projektZadaci) {
+        this.projektZadaci = projektZadaci;
     }
 }
