@@ -25,12 +25,22 @@
                     </div>
                     <div class="p-2 mx-5">
                         <div class="flex flex-row">
-                            <p @click="$store.state.projektInfoPage = 1" class="hover:text-gray-800 hover:cursor-pointer">O projektu</p>
+                            <p @click="$store.state.projektInfoPage = 1; storeInSession(1)" class="hover:text-gray-800 hover:cursor-pointer">O projektu</p>
                         </div>
                     </div>
                     <div class="p-2 mx-5">
                         <div class="flex flex-row">
-                            <p @click="$store.state.projektInfoPage = 2" class="hover:text-gray-800 hover:cursor-pointer">Sudionici</p>
+                            <p @click="$store.state.projektInfoPage = 2; storeInSession(2)" class="hover:text-gray-800 hover:cursor-pointer">Sudionici</p>
+                        </div>
+                    </div>
+                    <div class="p-2 mx-5">
+                        <div class="flex flex-row">
+                            <p @click="$store.state.projektInfoPage = 3; storeInSession(3)" class="hover:text-gray-800 hover:cursor-pointer">Zahtjevi</p>
+                        </div>
+                    </div>
+                    <div class="p-2 mx-5">
+                        <div class="flex flex-row">
+                            <p @click="$store.state.projektInfoPage = 4; storeInSession(4)" class="hover:text-gray-800 hover:cursor-pointer">Zadaci</p>
                         </div>
                     </div>
                 </div>
@@ -68,6 +78,9 @@ export default {
             this.$store.state.user = undefined
             sessionStorage.clear()
             this.$router.push("/Login")
+        },
+        storeInSession(value) {
+            sessionStorage.setItem("projektInfoPage", value)
         }
     }
 }

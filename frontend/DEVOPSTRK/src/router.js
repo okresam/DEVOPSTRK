@@ -47,6 +47,7 @@ router.beforeEach(async (to, from) => {
     if (to.name === 'Projekti') {
         sessionStorage.removeItem('trenutniProjekt')
         store.state.trenutniProjekt = undefined
+        sessionStorage.removeItem('projektInfoPage')
     }
 
     if (!store.state.user && to.name !== 'Login' && to.name !== 'Register') {

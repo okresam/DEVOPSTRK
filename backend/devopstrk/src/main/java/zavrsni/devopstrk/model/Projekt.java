@@ -42,6 +42,9 @@ public class Projekt {
     @OneToMany(mappedBy = "projekt")
     private Set<Zadatak> projektZadaci;
 
+    @OneToMany(mappedBy = "projekt")
+    private Set<Zahtjev> projektZahtjevi;
+
     public Projekt() {
 
     }
@@ -121,5 +124,13 @@ public class Projekt {
 
     public void setProjektZadaci(Set<Zadatak> projektZadaci) {
         this.projektZadaci = projektZadaci;
+    }
+
+    public Set<Zahtjev> getProjektZahtjevi() {
+        return projektZahtjevi;
+    }
+
+    public void setProjektZahtjevi(Set<Zahtjev> projektZahtjevi) {
+        this.projektZahtjevi = projektZahtjevi;
     }
 }
