@@ -12,10 +12,7 @@ import zavrsni.devopstrk.model.Projekt;
 import zavrsni.devopstrk.model.VrstaZahtjeva;
 import zavrsni.devopstrk.model.Zahtjev;
 import zavrsni.devopstrk.model.util.ZahtjevKljuc;
-import zavrsni.devopstrk.service.KorisnikService;
-import zavrsni.devopstrk.service.ProjektService;
-import zavrsni.devopstrk.service.VrstaZahtjevaService;
-import zavrsni.devopstrk.service.ZahtjevService;
+import zavrsni.devopstrk.service.*;
 
 import java.sql.Timestamp;
 import java.time.LocalDate;
@@ -37,6 +34,9 @@ public class ZahtjevController {
 
     @Autowired
     private ProjektService projektService;
+
+    @Autowired
+    private SudjelujeNaService sudjelujeNaService;
 
     @CrossOrigin("*")
     @PostMapping("/add")
@@ -110,10 +110,36 @@ public class ZahtjevController {
                     z.getOpisZahtjeva(),
                     z.getVrstaZahtjeva().getIdVrsteZahtjeva(),
                     z.getVrstaZahtjeva().getNazivVrsteZahtjeva(),
-                    z.getIzvor().getIdKorisnika()
+                    z.getIzvor().getIdKorisnika(),
+                    z.getIzvor().getEmail(),
+                    z.getIzvor().getIme(),
+                    z.getIzvor().getPrezime(),
+                    sudjelujeNaService.findUloga(z.getIzvor().getIdKorisnika(), projekt.getIdProjekta()).getNazivUloge()
             ));
         }
 
         return ResponseEntity.ok(result);
+    }
+
+    @CrossOrigin("*")
+    @PostMapping("/getChangeHistory")
+    public ResponseEntity<?> getChangeHistory(@RequestBody IdDTO dto) {
+        List<ZahtjevInfoDTO> output = new ArrayList<>();
+        for (Zahtjev z : zahtjevService.findChangeHistory(dto.getId())) {
+            output.add(new ZahtjevInfoDTO(
+                    z.getIdZahtjeva().getIdZahtjeva(),
+                    z.getNazivZahtjeva(),
+                    z.getOpisZahtjeva(),
+                    z.getVrstaZahtjeva().getIdVrsteZahtjeva(),
+                    z.getVrstaZahtjeva().getNazivVrsteZahtjeva(),
+                    z.getIzvor().getIdKorisnika(),
+                    z.getIzvor().getEmail(),
+                    z.getIzvor().getIme(),
+                    z.getIzvor().getPrezime(),
+                    z.getIdZahtjeva().getDatumKreiranja().toString()
+            ));
+        }
+
+        return ResponseEntity.ok(output);
     }
 }

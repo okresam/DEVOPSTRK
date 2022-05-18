@@ -14,17 +14,29 @@ public class ZahtjevInfoDTO {
 
     private Long idIzvora;
 
+    private String emailIzvora;
+
+    private String imeIzvora;
+
+    private String prezimeIzvora;
+
+    private String ulogaIzvora;
+
     public ZahtjevInfoDTO() {
 
     }
 
-    public ZahtjevInfoDTO(String idZahtjeva, String nazivZahtjeva, String opisZahtjeva, Long idVrsteZahtjeva, String nazivVrsteZahtjeva, Long idIzvora) {
+    public ZahtjevInfoDTO(String idZahtjeva, String nazivZahtjeva, String opisZahtjeva, Long idVrsteZahtjeva, String nazivVrsteZahtjeva, Long idIzvora, String emailIzvora, String imeIzvora, String prezimeIzvora, String ulogaIzvora) {
         this.idZahtjeva = idZahtjeva;
         this.nazivZahtjeva = nazivZahtjeva;
         this.opisZahtjeva = opisZahtjeva;
         this.idVrsteZahtjeva = idVrsteZahtjeva;
         this.nazivVrsteZahtjeva = nazivVrsteZahtjeva;
         this.idIzvora = idIzvora;
+        this.emailIzvora = emailIzvora;
+        this.imeIzvora = imeIzvora;
+        this.prezimeIzvora = prezimeIzvora;
+        this.ulogaIzvora = ulogaIzvora;
     }
 
     public String getIdZahtjeva() {
@@ -73,5 +85,37 @@ public class ZahtjevInfoDTO {
 
     public void setIdIzvora(Long idIzvora) {
         this.idIzvora = idIzvora;
+    }
+
+    public String getEmailIzvora() {
+        return emailIzvora;
+    }
+
+    public void setEmailIzvora(String emailIzvora) {
+        this.emailIzvora = emailIzvora;
+    }
+
+    public String getImeIzvora() {
+        return imeIzvora;
+    }
+
+    public void setImeIzvora(String imeIzvora) {
+        this.imeIzvora = imeIzvora;
+    }
+
+    public String getPrezimeIzvora() {
+        return prezimeIzvora;
+    }
+
+    public void setPrezimeIzvora(String prezimeIzvora) {
+        this.prezimeIzvora = prezimeIzvora;
+    }
+
+    public String getUlogaIzvora() {
+        return ulogaIzvora;
+    }
+
+    public void setUlogaIzvora(String ulogaIzvora) {
+        this.ulogaIzvora = ulogaIzvora;
     }
 }

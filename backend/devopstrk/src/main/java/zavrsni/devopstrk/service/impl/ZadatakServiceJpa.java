@@ -23,4 +23,14 @@ public class ZadatakServiceJpa implements ZadatakService {
     public Zadatak createZadatak(Zadatak zadatak) {
         return zadatakRepository.save(zadatak);
     }
+
+    @Override
+    public List<Zadatak> zahtjevZadaci(String idZahtjeva) {
+        return zadatakRepository.findByIdZahtjeva(idZahtjeva);
+    }
+
+    @Override
+    public List<Zadatak> projektZadaci(Long idProjekta) {
+        return zadatakRepository.findByProjekt_IdProjekta(idProjekta);
+    }
 }

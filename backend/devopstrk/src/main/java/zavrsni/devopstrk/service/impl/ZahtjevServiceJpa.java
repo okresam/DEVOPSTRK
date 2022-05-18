@@ -23,4 +23,9 @@ public class ZahtjevServiceJpa implements ZahtjevService {
     public Zahtjev createZahtjev(Zahtjev zahtjev) {
         return zahtjevRepository.save(zahtjev);
     }
+
+    @Override
+    public List<Zahtjev> findChangeHistory(String idZahtjeva) {
+        return zahtjevRepository.findByIdZahtjeva_IdZahtjeva(idZahtjeva);
+    }
 }

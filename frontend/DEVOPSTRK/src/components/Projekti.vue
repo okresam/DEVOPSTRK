@@ -22,7 +22,7 @@
                         @click="showDodaj">Dodaj projekt</button>
                 </div>
 
-                <div class="grid grid-flow-col auto-cols-max auto-rows-max">
+                <div class="flex flex-wrap">
                     <div v-if="!projekti.length" class="text-gray-500 mx-5 my-5">
                         Nema projekata za prikaz...
                     </div>
@@ -171,6 +171,7 @@ export default {
     },
     async mounted() {
         this.projekti = await RequestHandler.postRequest(SPRING_URL.concat('/korisnik/mojiProjekti'), { id: this.$store.state.user.email })
+        this.projekti.sort((a, b) => (a.nazivProjekta > b.nazivProjekta) ? 1 : -1)
     },
     methods: {
         showDodaj() {

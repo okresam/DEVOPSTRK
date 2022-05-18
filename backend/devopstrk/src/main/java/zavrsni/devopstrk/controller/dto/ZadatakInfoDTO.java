@@ -1,75 +1,64 @@
-package zavrsni.devopstrk.model;
+package zavrsni.devopstrk.controller.dto;
 
-import javax.persistence.*;
+import zavrsni.devopstrk.model.Prioritet;
+import zavrsni.devopstrk.model.Stanje;
+import zavrsni.devopstrk.model.VrstaZadatka;
+
 import java.sql.Date;
 
-@Entity
-@Table(name = "zadatak")
-public class Zadatak {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "idzadatka")
+public class ZadatakInfoDTO {
     private Long idZadatka;
 
-    @Column(name = "nazivzadatka", nullable = false)
     private String nazivZadatka;
 
-    @Column(name = "opiszadatka", nullable = false)
     private String opisZadatka;
 
-    @Column(name = "datumstvaranjazadatka", nullable = false)
     private Date datumStvaranjaZadatka;
 
-    @Column(name = "rokizvrsavanja", nullable = false)
     private Date rokIzvrsavanja;
 
-    @Column(name = "datumstvarnogizvrsavanja")
     private Date datumStvarnogIzvrsavanja;
 
-    @Column(name = "idzahtjeva", nullable = false)
-    private String idZahtjeva;
-
-    @ManyToOne(optional = false)
-    @JoinColumn(name = "idprojekta")
-    private Projekt projekt;
-
-    @ManyToOne(optional = false)
-    @JoinColumn(name = "idvrstezadatka")
     private VrstaZadatka vrstaZadatka;
 
-    @ManyToOne(optional = false)
-    @JoinColumn(name = "idstanja")
     private Stanje stanje;
 
-    @ManyToOne(optional = false)
-    @JoinColumn(name = "idprioriteta")
     private Prioritet prioritet;
 
-    @ManyToOne(optional = false)
-    @JoinColumn(name = "idizvrsitelja")
-    private Korisnik izvrsitelj;
+    private Long idIzvrsitelja;
 
-    public Zadatak() {
+    private String imeIzvrsitelja;
+
+    private String prezimeIzvrsitelja;
+
+    private String ulogaIzvrsitelja;
+
+    public ZadatakInfoDTO() {
 
     }
 
-    public Zadatak(String nazivZadatka, String opisZadatka, Date datumStvaranjaZadatka, Date rokIzvrsavanja, Date datumStvarnogIzvrsavanja, String idZahtjeva, Projekt projekt, VrstaZadatka vrstaZadatka, Stanje stanje, Prioritet prioritet, Korisnik izvrsitelj) {
+    public ZadatakInfoDTO(Long idZadatka, String nazivZadatka, String opisZadatka, Date datumStvaranjaZadatka, Date rokIzvrsavanja, Date datumStvarnogIzvrsavanja, VrstaZadatka vrstaZadatka, Stanje stanje, Prioritet prioritet, Long idIzvrsitelja, String imeIzvrsitelja, String prezimeIzvrsitelja, String ulogaIzvrsitelja) {
+        this.idZadatka = idZadatka;
         this.nazivZadatka = nazivZadatka;
         this.opisZadatka = opisZadatka;
         this.datumStvaranjaZadatka = datumStvaranjaZadatka;
         this.rokIzvrsavanja = rokIzvrsavanja;
         this.datumStvarnogIzvrsavanja = datumStvarnogIzvrsavanja;
-        this.idZahtjeva = idZahtjeva;
-        this.projekt = projekt;
         this.vrstaZadatka = vrstaZadatka;
         this.stanje = stanje;
         this.prioritet = prioritet;
-        this.izvrsitelj = izvrsitelj;
+        this.idIzvrsitelja = idIzvrsitelja;
+        this.imeIzvrsitelja = imeIzvrsitelja;
+        this.prezimeIzvrsitelja = prezimeIzvrsitelja;
+        this.ulogaIzvrsitelja = ulogaIzvrsitelja;
     }
 
     public Long getIdZadatka() {
         return idZadatka;
+    }
+
+    public void setIdZadatka(Long idZadatka) {
+        this.idZadatka = idZadatka;
     }
 
     public String getNazivZadatka() {
@@ -112,22 +101,6 @@ public class Zadatak {
         this.datumStvarnogIzvrsavanja = datumStvarnogIzvrsavanja;
     }
 
-    public String getIdZahtjeva() {
-        return idZahtjeva;
-    }
-
-    public void setIdZahtjeva(String idZahtjeva) {
-        this.idZahtjeva = idZahtjeva;
-    }
-
-    public Projekt getProjekt() {
-        return projekt;
-    }
-
-    public void setProjekt(Projekt projekt) {
-        this.projekt = projekt;
-    }
-
     public VrstaZadatka getVrstaZadatka() {
         return vrstaZadatka;
     }
@@ -152,12 +125,35 @@ public class Zadatak {
         this.prioritet = prioritet;
     }
 
-    public Korisnik getIzvrsitelj() {
-        return izvrsitelj;
+    public Long getIdIzvrsitelja() {
+        return idIzvrsitelja;
     }
 
-    public void setIzvrsitelj(Korisnik izvrsitelj) {
-        this.izvrsitelj = izvrsitelj;
+    public void setIdIzvrsitelja(Long idIzvrsitelja) {
+        this.idIzvrsitelja = idIzvrsitelja;
+    }
+
+    public String getImeIzvrsitelja() {
+        return imeIzvrsitelja;
+    }
+
+    public void setImeIzvrsitelja(String imeIzvrsitelja) {
+        this.imeIzvrsitelja = imeIzvrsitelja;
+    }
+
+    public String getPrezimeIzvrsitelja() {
+        return prezimeIzvrsitelja;
+    }
+
+    public void setPrezimeIzvrsitelja(String prezimeIzvrsitelja) {
+        this.prezimeIzvrsitelja = prezimeIzvrsitelja;
+    }
+
+    public String getUlogaIzvrsitelja() {
+        return ulogaIzvrsitelja;
+    }
+
+    public void setUlogaIzvrsitelja(String ulogaIzvrsitelja) {
+        this.ulogaIzvrsitelja = ulogaIzvrsitelja;
     }
 }
-

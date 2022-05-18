@@ -4,6 +4,9 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import zavrsni.devopstrk.model.Zahtjev;
 import zavrsni.devopstrk.model.util.ZahtjevKljuc;
 
+import java.util.List;
+
 public interface ZahtjevRepository extends JpaRepository<Zahtjev, ZahtjevKljuc> {
 
+    List<Zahtjev> findByIdZahtjeva_IdZahtjeva(String idZahtjeva);
 }
