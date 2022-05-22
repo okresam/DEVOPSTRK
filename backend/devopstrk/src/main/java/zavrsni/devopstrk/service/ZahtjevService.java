@@ -11,4 +11,6 @@ public interface ZahtjevService {
     Zahtjev createZahtjev(Zahtjev zahtjev);
 
     List<Zahtjev> findChangeHistory(String idZahtjeva);
+
+    void deleteByIdZahtjeva(String idZahtjeva);
 }

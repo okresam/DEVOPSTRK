@@ -142,4 +142,11 @@ public class ZahtjevController {
 
         return ResponseEntity.ok(output);
     }
+
+    @CrossOrigin("*")
+    @PostMapping("/delete")
+    public ResponseEntity<?> deleteZahtjev(@RequestBody IdDTO dto) {
+        zahtjevService.deleteByIdZahtjeva(dto.getId());
+        return ResponseEntity.ok(new MessageResponse("Zahtjev obrisan!"));
+    }
 }

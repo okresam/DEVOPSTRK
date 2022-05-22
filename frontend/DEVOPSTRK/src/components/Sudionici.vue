@@ -1,12 +1,14 @@
 <template>
-    <div class="flex flex-auto items-center justify-center min-h-screen bg-gray-300">
+    <div v-if="showDodaj" class="flex flex-auto items-center justify-center min-h-screen bg-gray-300">
         <div class="px-8 py-6 mt-4 text-left bg-white shadow-lg">
-            <h3 v-if="$store.state.user.idKorisnika === $store.state.trenutniProjekt.idVoditelja" class="text-2xl text-center font-bold">Dodaj sudionika</h3>
+            <h3 v-if="$store.state.user.idKorisnika === $store.state.trenutniProjekt.idVoditelja"
+                class="text-2xl text-center font-bold">Dodaj sudionika</h3>
             <p class="text-red-500 text-center">{{ message }}</p>
+
             <form @submit.prevent="dodajSudionika">
                 <div class="mt-4">
 
-                    <div v-if="$store.state.user.idKorisnika === $store.state.trenutniProjekt.idVoditelja" class="mb-10">
+                    <div v-if="$store.state.user.idKorisnika === $store.state.trenutniProjekt.idVoditelja">
                         <div>
                             <label class="block" for="emailSudionika">Email sudionika</label>
                             <input v-model="noviSudionik.emailSudionika" type="text" required
@@ -26,17 +28,39 @@
                             </select>
                         </div>
                         <div class="flex items-baseline justify-center">
+                            <p class="px-6 py-2 mt-4 mr-5 text-white bg-gray-600 rounded-lg hover:bg-gray-900 hover:cursor-pointer"
+                                @click="showDodaj = false">
+                                Natrag
+                            </p>
                             <button
-                                class="px-6 py-2 mt-4 text-white bg-cyan-600 rounded-lg hover:bg-cyan-900">Dodaj</button>
+                                class="px-6 py-2 mt-4 ml-5 text-white bg-cyan-600 rounded-lg hover:bg-cyan-900">Dodaj</button>
                         </div>
-                    </div>
-
-                    <div>
-                        <h3 class="text-4xl mb-5 font-bold">Sudionici:</h3>
-                        <p v-for="s in sudionici" class="text-2xl"> {{ s.ime }} {{ s.prezime }} ({{ s.ulogaSudionika.nazivUloge }})</p>
                     </div>
                 </div>
             </form>
+        </div>
+    </div>
+
+    <div v-else>
+        <div>
+            <h3 class="text-4xl mb-5 font-bold mx-10 my-10">Sudionici</h3>
+            <hr />
+            <button @click="showDodaj = true"
+                class="px-6 py-2 my-4 mx-5 text-white bg-blue-600 rounded-lg hover:bg-blue-900">Dodaj sudionika</button>
+            <table class="table-auto w-1/3 text-lg text-left text-gray-600 mx-20 my-5">
+                <thead class="text-lg text-gray-700 uppercase bg-gray-50">
+                    <tr>
+                        <th>Sudionik</th>
+                        <th>Uloga</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr v-for="s in sudionici" class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                        <td>{{ s.ime }} {{ s.prezime }}</td>
+                        <td>{{ s.ulogaSudionika.nazivUloge }}</td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
     </div>
 </template>
@@ -54,7 +78,8 @@ export default {
                 emailSudionika: '',
                 idUlogeSudionika: ''
             },
-            uloge: []
+            uloge: [],
+            showDodaj: false
         }
     },
     async mounted() {

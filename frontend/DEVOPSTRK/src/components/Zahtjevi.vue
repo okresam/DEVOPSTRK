@@ -35,7 +35,7 @@
                                 <td @click="zahtjevUredi(index)"
                                     class="hover:text-gray-400 cursor-pointer w-16 px-1 py-1 bg-blue-200 rounded-lg">
                                     Uredi</td>
-                                <td @click=""
+                                <td @click="deleteZahtjev(index)"
                                     class="hover:text-gray-400 cursor-pointer w-16 px-1 py-1 bg-red-200 rounded-lg">
                                     Obriši</td>
                             </tr>
@@ -96,20 +96,19 @@
                 </div>
             </div>
 
-            <div v-else-if="zahtjeviPage === 3" class="mx-10 my-10">
+            <div v-else-if="zahtjeviPage === 3">
 
-                <div v-if="!noviZadatakForm">
+                <div v-if="!noviZadatakForm" class="mx-10 my-10">
                     <button
-                        class="px-6 py-2 mt-4 text-white bg-gray-600 rounded-lg hover:bg-gray-900 hover:cursor-pointer"
+                        class="px-6 py-2 mt-4 mb-8 text-white bg-gray-600 rounded-lg hover:bg-gray-900 hover:cursor-pointer"
                         @click="zahtjeviPage = 1; zahtjevDetails = undefined">
                         Natrag
                     </button>
-                    <h3 class="text-2xl mt-10">Detalji:</h3>
 
                     <div class="flex flex-col">
                         <div>
                             <div class="flex flex-row">
-                                <h3 class="font-bold">Naziv:</h3>
+                                <h3 class="font-bold">Zahtjev:</h3>
                                 <p class="px-3">{{ zahtjevDetails.nazivZahtjeva }}</p>
                             </div>
                             <div class="flex flex-row">
@@ -190,8 +189,70 @@
                     </div>
                 </div>
 
-                <div v-else>
-                    Novi zadatak form
+                <div v-else class="flex flex-auto items-center justify-center min-h-screen bg-gray-300">
+                    <div class="px-8 py-6 mt-4 text-left bg-white shadow-lg">
+                        <h3 class="text-2xl text-center">Dodaj novi zadatak!</h3>
+                        <h3 class="text-xl text-center text-gray-500">Za zahtjev: {{ zahtjevDetails.nazivZahtjeva }}
+                        </h3>
+                        <form @submit.prevent="dodajZadatak">
+                            <div class="mt-4">
+                                <div>
+                                    <label class="block" for="nazivZadatka">Naziv zadatka</label>
+                                    <input v-model="noviZadatak.nazivZadatka" type="text" required
+                                        placeholder="Zadatak 12..."
+                                        oninvalid="this.setCustomValidity('Ovo polje je obavezno!')"
+                                        oninput="this.setCustomValidity('')"
+                                        class="w-full px-4 py-2 mt-2 border rounded-md focus:outline-none focus:ring-1 focus:ring-blue-600">
+                                </div>
+                                <div class="mt-4">
+                                    <label class="block" for="opisZadatka">Opis zadatka</label>
+                                    <input v-model="noviZadatak.opisZadatka" type="text" required
+                                        placeholder="Zadatak za dodavanje ..."
+                                        oninvalid="this.setCustomValidity('Ovo polje je obavezno!')"
+                                        oninput="this.setCustomValidity('')"
+                                        class="w-full px-4 py-2 mt-2 border rounded-md focus:outline-none focus:ring-1 focus:ring-blue-600">
+                                </div>
+                                <div class="mt-4">
+                                    <label class="block" for="rokIzvrsavanja">Rok izvršavanja</label>
+                                    <input v-model="noviZadatak.rokIzvrsavanja" type="date" required
+                                        oninvalid="this.setCustomValidity('Ovo polje je obavezno!')"
+                                        oninput="this.setCustomValidity('')"
+                                        class="w-full px-4 py-2 mt-2 border rounded-md focus:outline-none focus:ring-1 focus:ring-blue-600">
+                                </div>
+                                <div class="mt-4 text-center">
+                                    <label class="block" for="vrstaZadatka">Vrsta zadatka</label>
+                                    <select v-model="noviZadatak.idVrsteZadatka">
+                                        <option v-for="v in vrsteZadataka" :value="v.idVrsteZadatka">{{ v.nazivVrsteZadatka }}
+                                        </option>
+                                    </select>
+                                </div>
+                                <div class="mt-4 text-center">
+                                    <label class="block" for="prioritet">Prioritet</label>
+                                    <select v-model="noviZadatak.idPrioriteta">
+                                        <option v-for="p in prioriteti" :value="p.idPrioriteta">{{ p.nazivPrioriteta }}
+                                        </option>
+                                    </select>
+                                </div>
+                                <div class="mt-4 text-center">
+                                    <label class="block" for="izvrsitelj">Izvršitelj</label>
+                                    <select v-model="noviZadatak.emailIzvrsitelja">
+                                        <option v-for="mi in moguciIzvrsitelji" :value="mi.email">
+                                            {{ mi.ime }} {{ mi.prezime }} ({{ mi.ulogaSudionika.nazivUloge }})
+                                        </option>
+                                    </select>
+                                </div>
+                                <div class="flex items-baseline justify-between">
+                                    <p class="px-6 py-2 mt-4 text-white bg-gray-600 rounded-lg hover:bg-gray-900 hover:cursor-pointer"
+                                        @click="noviZadatakForm = 0">
+                                        Natrag
+                                    </p>
+                                    <button class="px-6 py-2 mt-4 text-white bg-cyan-600 rounded-lg hover:bg-cyan-900">
+                                        Dodaj
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
                 </div>
 
 
@@ -222,14 +283,27 @@ export default {
             zahtjevZadaci: [],
             zahtjevHistory: [],
             noviZadatak: {
-
+                nazivZadatka: '',
+                opisZadatka: '',
+                rokIzvrsavanja: '',
+                idZahtjeva: '',
+                idProjekta: '',
+                idVrsteZadatka: '',
+                idPrioriteta: '',
+                emailIzvrsitelja: ''
             },
-            noviZadatakForm: 0
+            noviZadatakForm: 0,
+            vrsteZadataka: [],
+            prioriteti: [],
+            moguciIzvrsitelji: []
         }
     },
     async mounted() {
         this.zahtjevi = await RequestHandler.postRequest(SPRING_URL.concat("/zahtjev/getProjektZahtjevi"), { "id": this.$store.state.trenutniProjekt.idProjekta.toString() })
         this.vrsteZahtjeva = await RequestHandler.getRequest(SPRING_URL.concat("/vrstazahtjeva/all"))
+        this.vrsteZadataka = await RequestHandler.getRequest(SPRING_URL.concat("/vrstazadatka/all"))
+        this.moguciIzvrsitelji = await RequestHandler.postRequest(SPRING_URL.concat('/projekt/sudionici'), { id: this.$store.state.trenutniProjekt.idProjekta.toString() })
+        this.prioriteti = await RequestHandler.getRequest(SPRING_URL.concat("/prioritet/all"))
     },
     methods: {
         async dodajZahtjev() {
@@ -266,6 +340,33 @@ export default {
             this.zahtjev.idProjekta = ''
 
             this.zahtjeviPage = 1
+        },
+        async dodajZadatak() {
+            this.noviZadatak.idZahtjeva = this.zahtjevDetails.idZahtjeva.toString()
+            this.noviZadatak.idProjekta = this.$store.state.trenutniProjekt.idProjekta.toString()
+            this.noviZadatak.idPrioriteta = this.noviZadatak.idPrioriteta.toString()
+            this.noviZadatak.idVrsteZadatka = this.noviZadatak.idVrsteZadatka.toString()
+            
+            await RequestHandler.postRequest(SPRING_URL.concat("/zadatak/add"), this.noviZadatak)
+            this.noviZadatak = {
+                nazivZadatka: '',
+                opisZadatka: '',
+                rokIzvrsavanja: '',
+                idZahtjeva: '',
+                idProjekta: '',
+                idVrsteZadatka: '',
+                idPrioriteta: '',
+                emailIzvrsitelja: ''
+            }
+
+            this.zahtjevZadaci = await RequestHandler.postRequest(SPRING_URL.concat("/zadatak/getZahtjevZadaci"), { "id": this.zahtjevDetails.idZahtjeva })
+            this.noviZadatakForm = 0
+        },
+        async deleteZahtjev(i) {
+            if (confirm("Jeste li sigurni?")) {
+                await RequestHandler.postRequest(SPRING_URL.concat("/zahtjev/delete"), { "id": this.zahtjevi[i].idZahtjeva })
+                this.$router.go()
+            }
         }
     }
 }
