@@ -16,24 +16,30 @@
                         <thead class="text-lg text-gray-700 uppercase bg-gray-50">
                             <tr>
                                 <th class="px-6 py-3">Naziv</th>
-                                <th class="px-6 py-3">Opis</th>
                                 <th class="px-6 py-3">Zahtjev</th>
                                 <th class="px-6 py-3">Datum stvaranja</th>
                                 <th class="px-6 py-3">Rok izvršavanja</th>
                                 <th class="px-6 py-3">Datum izvršavanja</th>
+                                <th class="px-6 py-3">Prioritet</th>
+                                <th class="px-6 py-3">Stanje</th>
                                 <th class="px-6 py-3">Izvršitelj</th>
                             </tr>
                         </thead>
 
                         <tbody>
-                            <tr v-for="z in zadaci" class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                            <tr v-for="(z, index) in zadaci" class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
                                 <td>{{ z.nazivZadatka }}</td>
-                                <td>{{ z.opisZadatka }}</td>
                                 <td>{{ z.nazivZahtjeva }}</td>
                                 <td>{{ z.datumStvaranjaZadatka }}</td>
                                 <td>{{ z.rokIzvrsavanja }}</td>
                                 <td>{{ z.datumStvarnogIzvrsavanja }}</td>
+                                <td>{{ z.prioritet.nazivPrioriteta }}</td>
+                                <td>{{ z.stanje.nazivStanja }}</td>
                                 <td>{{ z.imeIzvrsitelja }} {{ z.prezimeIzvrsitelja }} ({{ z.ulogaIzvrsitelja }})</td>
+                                <td @click="obrisiZadatak(index)"
+                                    class="hover:text-gray-400 cursor-pointer w-16 px-1 py-1 bg-red-200 rounded-lg">
+                                        Obriši
+                                </td>
                             </tr>
                         </tbody>
                     </table>
@@ -61,6 +67,12 @@ export default {
     methods: {
         async pretrazi() {
             this.zadaci = await RequestHandler.postRequest(SPRING_URL.concat("/zadatak/getProjektZadaciTrazi"), { "id": this.$store.state.trenutniProjekt.idProjekta.toString(), "search": this.pretraziValue })
+        },
+        async obrisiZadatak(i) {
+            if (confirm("Jeste li sigurni?")) {
+                await RequestHandler.postRequest(SPRING_URL.concat("/zadatak/delete"), { "id": this.zadaci[i].idZadatka.toString() })
+                this.$router.go()
+            }
         }
     }
 }

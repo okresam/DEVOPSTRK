@@ -17,6 +17,8 @@ public interface ZadatakRepository extends JpaRepository<Zadatak, Long> {
 
     void deleteZadatakByIdZahtjeva(String idZahtjeva);
 
-    @Query("SELECT z FROM Zadatak z WHERE z.projekt.idProjekta = :idProjekta AND lower(z.nazivZadatka) LIKE lower(concat('%', :trazi, '%')) OR z.projekt.idProjekta = :idProjekta AND lower(z.opisZadatka) LIKE lower(concat('%', :trazi, '%')) OR z.projekt.idProjekta = :idProjekta AND lower(z.izvrsitelj.ime) LIKE lower(concat('%', :trazi, '%')) OR z.projekt.idProjekta = :idProjekta AND lower(z.izvrsitelj.prezime) LIKE lower(concat('%', :trazi, '%')) OR z.projekt.idProjekta = :idProjekta AND lower(z.prioritet.nazivPrioriteta) LIKE lower(concat('%', :trazi, '%'))")
+    void deleteZadatakByIdZadatka(Long idZadatka);
+
+    @Query("SELECT z FROM Zadatak z WHERE z.projekt.idProjekta = :idProjekta AND lower(z.nazivZadatka) LIKE lower(concat('%', :trazi, '%')) OR z.projekt.idProjekta = :idProjekta AND lower(z.opisZadatka) LIKE lower(concat('%', :trazi, '%')) OR z.projekt.idProjekta = :idProjekta AND lower(z.izvrsitelj.ime) LIKE lower(concat('%', :trazi, '%')) OR z.projekt.idProjekta = :idProjekta AND lower(z.izvrsitelj.prezime) LIKE lower(concat('%', :trazi, '%')) OR z.projekt.idProjekta = :idProjekta AND lower(z.prioritet.nazivPrioriteta) LIKE lower(concat('%', :trazi, '%')) OR z.projekt.idProjekta = :idProjekta AND lower(z.stanje.nazivStanja) LIKE lower(concat('%', :trazi, '%'))")
     List<Zadatak> findProjektZadaciTrazi(@Param("idProjekta") Long idProjekta, @Param("trazi") String trazi);
 }

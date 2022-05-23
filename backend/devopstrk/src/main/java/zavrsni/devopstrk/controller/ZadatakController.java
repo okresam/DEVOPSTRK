@@ -167,4 +167,11 @@ public class ZadatakController {
         }
         return ResponseEntity.ok(zadaci);
     }
+
+    @CrossOrigin("*")
+    @PostMapping("/delete")
+    public ResponseEntity<?> deleteZadatak(@RequestBody IdDTO dto) {
+        zadatakService.deleteZadatak(Long.parseLong(dto.getId()));
+        return ResponseEntity.ok(new MessageResponse("Zadatak obrisan!"));
+    }
 }
