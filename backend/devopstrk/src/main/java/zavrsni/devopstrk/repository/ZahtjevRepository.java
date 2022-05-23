@@ -13,4 +13,5 @@ public interface ZahtjevRepository extends JpaRepository<Zahtjev, ZahtjevKljuc> 
     List<Zahtjev> findByIdZahtjeva_IdZahtjeva(String idZahtjeva);
 
     void deleteZahtjevByIdZahtjeva_IdZahtjeva(String idZahtjeva);
+
 }

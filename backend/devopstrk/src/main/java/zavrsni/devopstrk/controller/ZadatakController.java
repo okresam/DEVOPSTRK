@@ -3,10 +3,7 @@ package zavrsni.devopstrk.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import zavrsni.devopstrk.controller.dto.CreateZadatakDTO;
-import zavrsni.devopstrk.controller.dto.IdDTO;
-import zavrsni.devopstrk.controller.dto.MessageResponse;
-import zavrsni.devopstrk.controller.dto.ZadatakInfoDTO;
+import zavrsni.devopstrk.controller.dto.*;
 import zavrsni.devopstrk.model.*;
 import zavrsni.devopstrk.repository.SudjelujeNaRepository;
 import zavrsni.devopstrk.repository.ZadatakRepository;
@@ -42,6 +39,9 @@ public class ZadatakController {
     @Autowired
     private SudjelujeNaService sudjelujeNaService;
 
+    @Autowired
+    private ZahtjevService zahtjevService;
+
     @CrossOrigin("*")
     @PostMapping("/add")
     public ResponseEntity<?> createZadatak(@RequestBody CreateZadatakDTO dto) {
@@ -73,6 +73,14 @@ public class ZadatakController {
     @PostMapping("/getZahtjevZadaci")
     public ResponseEntity<?> getZahtjevZadaci(@RequestBody IdDTO dto) {
         List<ZadatakInfoDTO> zadaci = new ArrayList<>();
+        List<Zahtjev> zahtjevHistory = zahtjevService.findChangeHistory(dto.getId());
+        Zahtjev najnoviji = zahtjevHistory.get(0);
+        for (Zahtjev z : zahtjevHistory) {
+            if (najnoviji.getIdZahtjeva().getDatumKreiranja().before(z.getIdZahtjeva().getDatumKreiranja())) {
+                najnoviji = z;
+            }
+        }
+
         for (Zadatak z : zadatakService.zahtjevZadaci(dto.getId())) {
             zadaci.add(new ZadatakInfoDTO(
                     z.getIdZadatka(),
@@ -87,7 +95,8 @@ public class ZadatakController {
                     z.getIzvrsitelj().getIdKorisnika(),
                     z.getIzvrsitelj().getIme(),
                     z.getIzvrsitelj().getPrezime(),
-                    sudjelujeNaService.findUloga(z.getIzvrsitelj().getIdKorisnika(), z.getProjekt().getIdProjekta()).getNazivUloge()
+                    sudjelujeNaService.findUloga(z.getIzvrsitelj().getIdKorisnika(), z.getProjekt().getIdProjekta()).getNazivUloge(),
+                    najnoviji.getNazivZahtjeva()
             ));
         }
         return ResponseEntity.ok(zadaci);
@@ -98,6 +107,14 @@ public class ZadatakController {
     public ResponseEntity<?> getProjektZadaci(@RequestBody IdDTO dto) {
         List<ZadatakInfoDTO> zadaci = new ArrayList<>();
         for (Zadatak z : zadatakService.projektZadaci(Long.parseLong(dto.getId()))) {
+            List<Zahtjev> zahtjevHistory = zahtjevService.findChangeHistory(z.getIdZahtjeva());
+            Zahtjev najnoviji = zahtjevHistory.get(0);
+            for (Zahtjev zah : zahtjevHistory) {
+                if (najnoviji.getIdZahtjeva().getDatumKreiranja().before(zah.getIdZahtjeva().getDatumKreiranja())) {
+                    najnoviji = zah;
+                }
+            }
+
             zadaci.add(new ZadatakInfoDTO(
                     z.getIdZadatka(),
                     z.getNazivZadatka(),
@@ -111,7 +128,41 @@ public class ZadatakController {
                     z.getIzvrsitelj().getIdKorisnika(),
                     z.getIzvrsitelj().getIme(),
                     z.getIzvrsitelj().getPrezime(),
-                    sudjelujeNaService.findUloga(z.getIzvrsitelj().getIdKorisnika(), z.getProjekt().getIdProjekta()).getNazivUloge()
+                    sudjelujeNaService.findUloga(z.getIzvrsitelj().getIdKorisnika(), z.getProjekt().getIdProjekta()).getNazivUloge(),
+                    najnoviji.getNazivZahtjeva()
+            ));
+        }
+        return ResponseEntity.ok(zadaci);
+    }
+
+    @CrossOrigin("*")
+    @PostMapping("/getProjektZadaciTrazi")
+    public ResponseEntity<?> getProjektZadaciTrazi(@RequestBody TraziDTO dto) {
+        List<ZadatakInfoDTO> zadaci = new ArrayList<>();
+        for (Zadatak z : zadatakService.projektZadaciTrazi(Long.parseLong(dto.getId()), dto.getSearch())) {
+            List<Zahtjev> zahtjevHistory = zahtjevService.findChangeHistory(z.getIdZahtjeva());
+            Zahtjev najnoviji = zahtjevHistory.get(0);
+            for (Zahtjev zah : zahtjevHistory) {
+                if (najnoviji.getIdZahtjeva().getDatumKreiranja().before(zah.getIdZahtjeva().getDatumKreiranja())) {
+                    najnoviji = zah;
+                }
+            }
+
+            zadaci.add(new ZadatakInfoDTO(
+                    z.getIdZadatka(),
+                    z.getNazivZadatka(),
+                    z.getOpisZadatka(),
+                    z.getDatumStvaranjaZadatka(),
+                    z.getRokIzvrsavanja(),
+                    z.getDatumStvarnogIzvrsavanja(),
+                    z.getVrstaZadatka(),
+                    z.getStanje(),
+                    z.getPrioritet(),
+                    z.getIzvrsitelj().getIdKorisnika(),
+                    z.getIzvrsitelj().getIme(),
+                    z.getIzvrsitelj().getPrezime(),
+                    sudjelujeNaService.findUloga(z.getIzvrsitelj().getIdKorisnika(), z.getProjekt().getIdProjekta()).getNazivUloge(),
+                    najnoviji.getNazivZahtjeva()
             ));
         }
         return ResponseEntity.ok(zadaci);

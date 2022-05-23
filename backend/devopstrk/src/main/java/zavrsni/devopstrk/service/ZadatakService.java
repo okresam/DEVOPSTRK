@@ -13,4 +13,6 @@ public interface ZadatakService {
     List<Zadatak> zahtjevZadaci(String idZahtjeva);
 
     List<Zadatak> projektZadaci(Long idProjekta);
+
+    List<Zadatak> projektZadaciTrazi(Long idProjekta, String trazi);
 }

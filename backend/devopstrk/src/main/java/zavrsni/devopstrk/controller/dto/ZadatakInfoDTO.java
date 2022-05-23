@@ -33,11 +33,13 @@ public class ZadatakInfoDTO {
 
     private String ulogaIzvrsitelja;
 
+    private String nazivZahtjeva;
+
     public ZadatakInfoDTO() {
 
     }
 
-    public ZadatakInfoDTO(Long idZadatka, String nazivZadatka, String opisZadatka, Date datumStvaranjaZadatka, Date rokIzvrsavanja, Date datumStvarnogIzvrsavanja, VrstaZadatka vrstaZadatka, Stanje stanje, Prioritet prioritet, Long idIzvrsitelja, String imeIzvrsitelja, String prezimeIzvrsitelja, String ulogaIzvrsitelja) {
+    public ZadatakInfoDTO(Long idZadatka, String nazivZadatka, String opisZadatka, Date datumStvaranjaZadatka, Date rokIzvrsavanja, Date datumStvarnogIzvrsavanja, VrstaZadatka vrstaZadatka, Stanje stanje, Prioritet prioritet, Long idIzvrsitelja, String imeIzvrsitelja, String prezimeIzvrsitelja, String ulogaIzvrsitelja, String nazivZahtjeva) {
         this.idZadatka = idZadatka;
         this.nazivZadatka = nazivZadatka;
         this.opisZadatka = opisZadatka;
@@ -51,6 +53,7 @@ public class ZadatakInfoDTO {
         this.imeIzvrsitelja = imeIzvrsitelja;
         this.prezimeIzvrsitelja = prezimeIzvrsitelja;
         this.ulogaIzvrsitelja = ulogaIzvrsitelja;
+        this.nazivZahtjeva = nazivZahtjeva;
     }
 
     public Long getIdZadatka() {
@@ -155,5 +158,13 @@ public class ZadatakInfoDTO {
 
     public void setUlogaIzvrsitelja(String ulogaIzvrsitelja) {
         this.ulogaIzvrsitelja = ulogaIzvrsitelja;
+    }
+
+    public String getNazivZahtjeva() {
+        return nazivZahtjeva;
+    }
+
+    public void setNazivZahtjeva(String nazivZahtjeva) {
+        this.nazivZahtjeva = nazivZahtjeva;
     }
 }
