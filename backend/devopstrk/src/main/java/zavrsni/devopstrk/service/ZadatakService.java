@@ -17,4 +17,12 @@ public interface ZadatakService {
     List<Zadatak> projektZadaciTrazi(Long idProjekta, String trazi);
 
     void deleteZadatak(Long idZadatka);
+
+    Zadatak fetch(Long idZadatka);
+
+    void updateZadatak(Zadatak zadatak);
+
+    int getBrojZavrsenih(String idZahtjeva);
+
+    int getBrojNezavrsenih(String idZahtjeva);
 }

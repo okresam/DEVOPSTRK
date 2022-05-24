@@ -43,4 +43,24 @@ public class ZadatakServiceJpa implements ZadatakService {
     public void deleteZadatak(Long idZadatka) {
         zadatakRepository.deleteZadatakByIdZadatka(idZadatka);
     }
+
+    @Override
+    public Zadatak fetch(Long idZadatka) {
+        return zadatakRepository.findByIdZadatka(idZadatka);
+    }
+
+    @Override
+    public void updateZadatak(Zadatak zadatak) {
+        zadatakRepository.save(zadatak);
+    }
+
+    @Override
+    public int getBrojZavrsenih(String idZahtjeva) {
+        return zadatakRepository.findBrojZavrsenih(idZahtjeva);
+    }
+
+    @Override
+    public int getBrojNezavrsenih(String idZahtjeva) {
+        return zadatakRepository.findBrojNezavrsenih(idZahtjeva);
+    }
 }

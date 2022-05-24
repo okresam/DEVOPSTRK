@@ -174,4 +174,34 @@ public class ZadatakController {
         zadatakService.deleteZadatak(Long.parseLong(dto.getId()));
         return ResponseEntity.ok(new MessageResponse("Zadatak obrisan!"));
     }
+
+    @CrossOrigin("*")
+    @PostMapping("/edit")
+    public ResponseEntity<?> editZadatak(@RequestBody EditZadatakDTO dto) {
+        Zadatak zadatak = zadatakService.fetch(Long.parseLong(dto.getIdZadatka()));
+        VrstaZadatka vrstaZadatka = vrstaZadatkaService.findById(Long.parseLong(dto.getIdVrsteZadatka())).get();
+        Prioritet prioritet = prioritetService.findById(Long.parseLong(dto.getIdPrioriteta())).get();
+
+        zadatak.setNazivZadatka(dto.getNazivZadatka());
+        zadatak.setOpisZadatka(dto.getOpisZadatka());
+        zadatak.setRokIzvrsavanja(dto.getRokIzvrsavanja());
+        zadatak.setVrstaZadatka(vrstaZadatka);
+        zadatak.setPrioritet(prioritet);
+
+        zadatakService.updateZadatak(zadatak);
+
+        return ResponseEntity.ok(new MessageResponse("Zadatak izmjenjen!"));
+    }
+
+    @CrossOrigin("*")
+    @PostMapping("/completedNumber")
+    public ResponseEntity<?> getCompletedNumber(@RequestBody IdDTO dto) {
+        return ResponseEntity.ok(zadatakService.getBrojZavrsenih(dto.getId()));
+    }
+
+    @CrossOrigin("*")
+    @PostMapping("/incompletedNumber")
+    public ResponseEntity<?> getIncompletedNumber(@RequestBody IdDTO dto) {
+        return ResponseEntity.ok(zadatakService.getBrojNezavrsenih(dto.getId()));
+    }
 }

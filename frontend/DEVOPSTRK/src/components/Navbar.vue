@@ -43,6 +43,11 @@
                             <p @click="$store.state.projektInfoPage = 4; storeInSession(4)" class="hover:text-gray-800 hover:cursor-pointer">Zadaci</p>
                         </div>
                     </div>
+                    <div class="p-2 mx-5">
+                        <div class="flex flex-row">
+                            <p @click="$store.state.projektInfoPage = 5; storeInSession(5)" class="hover:text-gray-800 hover:cursor-pointer">Moji zadaci</p>
+                        </div>
+                    </div>
                 </div>
                 <div class="p-2 mx-5">
                     <div class="flex flex-row">

@@ -15,11 +15,13 @@
                 </div>
 
                 <div>
-                    <table class="table-auto w-4/6 text-lg text-left text-gray-600 mx-20 my-20">
+                    <table class="table-auto w-5/6 text-lg text-left text-gray-600 mx-20 my-20">
                         <thead class="text-lg text-gray-700 uppercase bg-gray-50">
                             <tr>
                                 <th class="px-6 py-3">Naziv</th>
                                 <th class="px-6 py-3">Vrsta</th>
+                                <th class="px-6 py-3 text-center w-4">Otvoreni zadaci</th>
+                                <th class="px-6 py-3 text-center w-4">Zatvoreni zadaci</th>
                             </tr>
                         </thead>
 
@@ -28,6 +30,8 @@
                                 class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
                                 <td>{{ z.nazivZahtjeva }}</td>
                                 <td>{{ z.nazivVrsteZahtjeva }}</td>
+                                <td class="text-center">{{ brojNezavrsenihZad[index] }}</td>
+                                <td class="text-center">{{ brojZavrsenihZad[index] }}</td>
                                 <td @click="zahtjevDetail(index)"
                                     class="hover:text-gray-400 cursor-pointer w-16 px-1 py-1 bg-cyan-200 rounded-lg">
                                     Detalji
@@ -47,7 +51,7 @@
             <div v-else-if="zahtjeviPage === 2">
                 <div class="flex flex-auto items-center justify-center min-h-screen bg-gray-300">
                     <div class="px-8 py-6 mt-4 text-left bg-white shadow-lg">
-                        <h3 class="text-2xl text-center">Dodaj novi zahtjev!</h3>
+                        <h3 class="text-2xl text-center">Zahtjev</h3>
                         <form @submit.prevent="dodajZahtjev">
                             <div class="mt-4">
                                 <div>
@@ -295,7 +299,9 @@ export default {
             noviZadatakForm: 0,
             vrsteZadataka: [],
             prioriteti: [],
-            moguciIzvrsitelji: []
+            moguciIzvrsitelji: [],
+            brojZavrsenihZad: [],
+            brojNezavrsenihZad: []
         }
     },
     async mounted() {
@@ -304,6 +310,13 @@ export default {
         this.vrsteZadataka = await RequestHandler.getRequest(SPRING_URL.concat("/vrstazadatka/all"))
         this.moguciIzvrsitelji = await RequestHandler.postRequest(SPRING_URL.concat('/projekt/sudionici'), { id: this.$store.state.trenutniProjekt.idProjekta.toString() })
         this.prioriteti = await RequestHandler.getRequest(SPRING_URL.concat("/prioritet/all"))
+
+        for(let z of this.zahtjevi) {
+            let numbC = await RequestHandler.postRequest(SPRING_URL.concat("/zadatak/completedNumber"), { id: z.idZahtjeva })
+            let numI = await RequestHandler.postRequest(SPRING_URL.concat("/zadatak/incompletedNumber"), { id: z.idZahtjeva })
+            this.brojZavrsenihZad.push(numbC)
+            this.brojNezavrsenihZad.push(numI)
+        }
     },
     methods: {
         async dodajZahtjev() {
