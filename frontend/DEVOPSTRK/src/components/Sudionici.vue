@@ -8,7 +8,7 @@
             <form @submit.prevent="dodajSudionika">
                 <div class="mt-4">
 
-                    <div v-if="$store.state.user.idKorisnika === $store.state.trenutniProjekt.idVoditelja">
+                    <div>
                         <div>
                             <label class="block" for="emailSudionika">Email sudionika</label>
                             <input v-model="noviSudionik.emailSudionika" type="text" required
@@ -45,7 +45,7 @@
         <div>
             <h3 class="text-4xl mb-5 font-bold mx-10 my-10">Sudionici</h3>
             <hr />
-            <button @click="showDodaj = true"
+            <button v-if="$store.state.user.idKorisnika === $store.state.trenutniProjekt.idVoditelja" @click="showDodaj = true"
                 class="px-6 py-2 my-4 mx-5 text-white bg-blue-600 rounded-lg hover:bg-blue-900">Dodaj sudionika</button>
             <table class="table-auto w-1/3 text-lg text-left text-gray-600 mx-20 my-5">
                 <thead class="text-lg text-gray-700 uppercase bg-gray-50">

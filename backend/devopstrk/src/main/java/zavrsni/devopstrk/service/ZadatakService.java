@@ -25,4 +25,6 @@ public interface ZadatakService {
     int getBrojZavrsenih(String idZahtjeva);
 
     int getBrojNezavrsenih(String idZahtjeva);
+
+    List<Zadatak> getMojiZadaciNaProjektu(Long idProjekta, Long idKorisnika);
 }

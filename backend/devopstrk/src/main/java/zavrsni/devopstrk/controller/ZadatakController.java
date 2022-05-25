@@ -10,6 +10,7 @@ import zavrsni.devopstrk.repository.ZadatakRepository;
 import zavrsni.devopstrk.service.*;
 
 import java.sql.Date;
+import java.sql.Timestamp;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
@@ -203,5 +204,58 @@ public class ZadatakController {
     @PostMapping("/incompletedNumber")
     public ResponseEntity<?> getIncompletedNumber(@RequestBody IdDTO dto) {
         return ResponseEntity.ok(zadatakService.getBrojNezavrsenih(dto.getId()));
+    }
+
+    @CrossOrigin("*")
+    @PostMapping("/getMojiZadaciNaProjektu")
+    public ResponseEntity<?> getMojiZadaciNaProjektu(@RequestBody TraziDTO dto) {
+        List<ZadatakInfoDTO> mojiZadaci = new ArrayList<>();
+
+        for (Zadatak z : zadatakService.getMojiZadaciNaProjektu(Long.parseLong(dto.getId()), Long.parseLong(dto.getSearch()))) {
+            List<Zahtjev> zahtjevHistory = zahtjevService.findChangeHistory(z.getIdZahtjeva());
+            Zahtjev najnoviji = zahtjevHistory.get(0);
+            for (Zahtjev zah : zahtjevHistory) {
+                if (najnoviji.getIdZahtjeva().getDatumKreiranja().before(zah.getIdZahtjeva().getDatumKreiranja())) {
+                    najnoviji = zah;
+                }
+            }
+
+            mojiZadaci.add(new ZadatakInfoDTO(
+               z.getIdZadatka(),
+               z.getNazivZadatka(),
+               z.getOpisZadatka(),
+               z.getDatumStvaranjaZadatka(),
+               z.getRokIzvrsavanja(),
+               z.getDatumStvarnogIzvrsavanja(),
+               z.getVrstaZadatka(),
+               z.getStanje(),
+               z.getPrioritet(),
+               z.getIzvrsitelj().getIdKorisnika(),
+               null,
+               null,
+               null,
+                najnoviji.getNazivZahtjeva()
+            ));
+        }
+
+        return ResponseEntity.ok(mojiZadaci);
+    }
+
+    @CrossOrigin("*")
+    @PostMapping("/stanjeChange")
+    public ResponseEntity<?> changeStanje(@RequestBody IdDTO dto) {
+        Zadatak zadatak = zadatakService.fetch(Long.parseLong(dto.getId()));
+        Stanje novoStanje = stanjeService.findById(zadatak.getStanje().getIdStanja() + 1).get();
+
+        zadatak.setStanje(novoStanje);
+
+        long stanjeId = novoStanje.getIdStanja();
+        if (stanjeId == Long.parseLong("3")) {
+            zadatak.setDatumStvarnogIzvrsavanja(new Date(Date.from(Instant.now()).getTime()));
+        }
+
+        zadatakService.updateZadatak(zadatak);
+
+        return ResponseEntity.ok(new MessageResponse("Stanje zadatka izmjenjeno!"));
     }
 }

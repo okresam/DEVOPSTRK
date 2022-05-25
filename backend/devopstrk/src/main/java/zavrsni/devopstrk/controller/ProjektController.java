@@ -4,10 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import zavrsni.devopstrk.controller.dto.*;
-import zavrsni.devopstrk.model.Korisnik;
-import zavrsni.devopstrk.model.Projekt;
-import zavrsni.devopstrk.model.Stanje;
-import zavrsni.devopstrk.model.SudjelujeNa;
+import zavrsni.devopstrk.model.*;
 import zavrsni.devopstrk.model.util.SudjelujeNaKljuc;
 import zavrsni.devopstrk.service.*;
 
@@ -33,6 +30,9 @@ public class ProjektController {
 
     @Autowired
     private ProjektService projektService;
+
+    @Autowired
+    private ZahtjevService zahtjevService;
 
     @GetMapping("/all")
     public List<Projekt> listProjekti() {
@@ -66,6 +66,12 @@ public class ProjektController {
     @CrossOrigin("*")
     @PostMapping("/delete")
     public ResponseEntity<?> deleteProjekt(@RequestBody IdDTO dto) {
+        Projekt projekt = projektService.fetch(Long.parseLong(dto.getId()));
+
+        for (Zahtjev z : projekt.getProjektZahtjevi()) {
+            zahtjevService.deleteByIdZahtjeva(z.getIdZahtjeva().getIdZahtjeva());
+        }
+
         projektService.deleteByIdProjekta(Long.parseLong(dto.getId()));
         return ResponseEntity.ok(new MessageResponse("Projekt obrisan!"));
     }

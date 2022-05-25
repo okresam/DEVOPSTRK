@@ -29,4 +29,6 @@ public interface ZadatakRepository extends JpaRepository<Zadatak, Long> {
 
     @Query("SELECT count(z) FROM Zadatak z WHERE z.idZahtjeva = :idZahtjeva AND z.stanje.idStanja = 1 OR z.idZahtjeva = :idZahtjeva AND z.stanje.idStanja = 2")
     int findBrojNezavrsenih(@Param("idZahtjeva") String idZahtjeva);
+
+    List<Zadatak> findByProjekt_IdProjektaAndIzvrsitelj_IdKorisnika(Long idProjekta, Long idKorisnika);
 }

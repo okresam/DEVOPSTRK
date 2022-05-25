@@ -105,7 +105,7 @@
                 <div v-if="!noviZadatakForm" class="mx-10 my-10">
                     <button
                         class="px-6 py-2 mt-4 mb-8 text-white bg-gray-600 rounded-lg hover:bg-gray-900 hover:cursor-pointer"
-                        @click="zahtjeviPage = 1; zahtjevDetails = undefined">
+                        @click="zahtjeviPage = 1; zahtjevDetails = undefined; this.$router.go()">
                         Natrag
                     </button>
 

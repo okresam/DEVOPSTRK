@@ -63,4 +63,9 @@ public class ZadatakServiceJpa implements ZadatakService {
     public int getBrojNezavrsenih(String idZahtjeva) {
         return zadatakRepository.findBrojNezavrsenih(idZahtjeva);
     }
+
+    @Override
+    public List<Zadatak> getMojiZadaciNaProjektu(Long idProjekta, Long idKorisnika) {
+        return zadatakRepository.findByProjekt_IdProjektaAndIzvrsitelj_IdKorisnika(idProjekta, idKorisnika);
+    }
 }
