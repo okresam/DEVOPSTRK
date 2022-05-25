@@ -18,6 +18,7 @@ import zavrsni.devopstrk.service.KorisnikService;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 @RestController
 @RequestMapping("/korisnik")
@@ -43,9 +44,27 @@ public class KorisnikController {
     @CrossOrigin("*")
     @PostMapping("/add")
     public ResponseEntity<?> createKorisnik(@RequestBody CreateKorisnikDTO dto) {
-        Korisnik korisnik = new Korisnik(dto.getIme(), dto.getPrezime(), dto.getEmail(), encoder.encode(dto.getLozinka()), true);
+        Korisnik korisnik = new Korisnik(
+                dto.getIme(),
+                dto.getPrezime(),
+                dto.getEmail(),
+                encoder.encode(dto.getLozinka()),
+                true
+                );
         korisnikService.createKorisnik(korisnik);
+
         return ResponseEntity.ok(new MessageResponse("Korisnik dodan!"));
+    }
+
+    public static String alphaNumericString(int len) {
+        String AB = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        Random rnd = new Random();
+
+        StringBuilder sb = new StringBuilder(len);
+        for (int i = 0; i < len; i++) {
+            sb.append(AB.charAt(rnd.nextInt(AB.length())));
+        }
+        return sb.toString();
     }
 
     @CrossOrigin("*")
