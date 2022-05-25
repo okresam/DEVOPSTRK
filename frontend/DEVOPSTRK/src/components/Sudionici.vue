@@ -43,7 +43,9 @@
 
     <div v-else>
         <div>
-            <h3 class="text-4xl mb-5 font-bold mx-10 my-10">Sudionici</h3>
+            <div class="flex flex-row text-3xl py-5 px-5 font-bold">
+                    <h3>Sudionici</h3>
+                </div>
             <hr />
             <button v-if="$store.state.user.idKorisnika === $store.state.trenutniProjekt.idVoditelja" @click="showDodaj = true"
                 class="px-6 py-2 my-4 mx-5 text-white bg-blue-600 rounded-lg hover:bg-blue-900">Dodaj sudionika</button>

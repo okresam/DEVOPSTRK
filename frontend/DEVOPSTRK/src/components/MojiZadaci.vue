@@ -83,6 +83,7 @@ export default {
                     this.mojiZadaci.push(z)
                 }
             }
+            this.mojiZadaci.sort((a, b) => (a.nazivZadatka > b.nazivZadatka) ? 1 : -1)
         },
         zatvoreniPrikaz() {
             this.mojiZadaci = []
@@ -91,6 +92,7 @@ export default {
                     this.mojiZadaci.push(z)
                 }
             }
+            this.mojiZadaci.sort((a, b) => (a.nazivZadatka > b.nazivZadatka) ? 1 : -1)
         },
         async promjeniStanje(i) {
             if (confirm("Jeste li sigurni?")) {

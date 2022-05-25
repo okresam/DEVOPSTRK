@@ -28,7 +28,7 @@
 
                         <tbody>
                             <tr v-for="(z, index) in zadaci" class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-                                <td>{{ z.nazivZadatka }}</td>
+                                <td class="text-left">{{ z.nazivZadatka }}</td>
                                 <td>{{ z.nazivZahtjeva }}</td>
                                 <td>{{ z.datumStvaranjaZadatka }}</td>
                                 <td>{{ z.rokIzvrsavanja }}</td>
@@ -36,11 +36,13 @@
                                 <td>{{ z.prioritet.nazivPrioriteta }}</td>
                                 <td>{{ z.stanje.nazivStanja }}</td>
                                 <td>{{ z.imeIzvrsitelja }} {{ z.prezimeIzvrsitelja }} ({{ z.ulogaIzvrsitelja }})</td>
-                                <td @click="urediZadatak(index)"
+                                <td v-if="$store.state.user.idKorisnika === $store.state.trenutniProjekt.idVoditelja"
+                                    @click="urediZadatak(index)"
                                     class="hover:text-gray-400 cursor-pointer w-16 px-1 py-1 bg-blue-200 rounded-lg">
                                         Uredi
                                 </td>
-                                <td @click="obrisiZadatak(index)"
+                                <td v-if="$store.state.user.idKorisnika === $store.state.trenutniProjekt.idVoditelja"
+                                    @click="obrisiZadatak(index)"
                                     class="hover:text-gray-400 cursor-pointer w-16 px-1 py-1 bg-red-200 rounded-lg">
                                         Obriši
                                 </td>

@@ -8,7 +8,8 @@
                 </div>
                 <hr />
                 <div>
-                    <button class="my-5 px-6 py-2 ml-5 text-white bg-blue-600 rounded-lg hover:bg-blue-900"
+                    <button 
+                        class="my-5 px-6 py-2 ml-5 text-white bg-blue-600 rounded-lg hover:bg-blue-900"
                         type="button" @click="zahtjeviPage = 2">
                         Dodaj zahtjev
                     </button>
@@ -129,7 +130,7 @@
                                         zahtjevDetails.ulogaIzvora
                                 }})</p>
                             </div>
-                            <button
+                            <button v-if="$store.state.user.idKorisnika === $store.state.trenutniProjekt.idVoditelja"
                                 class="px-6 py-2 mt-10 text-white bg-blue-600 rounded-lg hover:bg-blue-900 hover:cursor-pointer"
                                 @click="noviZadatakForm = 1">
                                 Novi zadatak
@@ -306,6 +307,8 @@ export default {
     },
     async mounted() {
         this.zahtjevi = await RequestHandler.postRequest(SPRING_URL.concat("/zahtjev/getProjektZahtjevi"), { "id": this.$store.state.trenutniProjekt.idProjekta.toString() })
+        this.zahtjevi.sort((a, b) => (a.nazivZahtjeva > b.nazivZahtjeva) ? 1 : -1)
+        
         this.vrsteZahtjeva = await RequestHandler.getRequest(SPRING_URL.concat("/vrstazahtjeva/all"))
         this.vrsteZadataka = await RequestHandler.getRequest(SPRING_URL.concat("/vrstazadatka/all"))
         this.moguciIzvrsitelji = await RequestHandler.postRequest(SPRING_URL.concat('/projekt/sudionici'), { id: this.$store.state.trenutniProjekt.idProjekta.toString() })
