@@ -2,6 +2,7 @@ package zavrsni.devopstrk.service;
 
 import zavrsni.devopstrk.model.Zadatak;
 
+import java.sql.Date;
 import java.util.List;
 
 public interface ZadatakService {
@@ -27,4 +28,8 @@ public interface ZadatakService {
     int getBrojNezavrsenih(String idZahtjeva);
 
     List<Zadatak> getMojiZadaciNaProjektu(Long idProjekta, Long idKorisnika);
+
+    List<Zadatak> getProjektZadaciRokIzvrsavanja(Long idProjekta, Date rokIzvrsavanja);
+
+    List<Zadatak> getProjektZadaciStvarnoIzvrsavanje(Long idProjekta, Date datumStavrnogIzvrsavanja);
 }

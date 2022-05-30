@@ -4,6 +4,7 @@ import Login from './components/Login.vue'
 import Projekti from './components/Projekti.vue'
 import Register from './components/Register.vue'
 import ProjektInfo from './components/ProjektInfo.vue'
+import Uloge from './components/Uloge.vue'
 import store from "./store.js"
 
 const routes = [
@@ -15,6 +16,11 @@ const routes = [
         path: '/Projekti',
         name: 'Projekti',
         component: Projekti
+    },
+    {
+        path: '/Uloge',
+        name: 'Uloge',
+        component: Uloge
     },
     {
         path: '/login',
@@ -44,7 +50,7 @@ const router = createRouter({
 
 router.beforeEach(async (to, from) => {
     
-    if (to.name === 'Projekti') {
+    if (to.name === 'Projekti' || to.name === 'Uloge') {
         sessionStorage.removeItem('trenutniProjekt')
         store.state.trenutniProjekt = undefined
         sessionStorage.removeItem('projektInfoPage')

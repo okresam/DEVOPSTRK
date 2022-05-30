@@ -258,4 +258,77 @@ public class ZadatakController {
 
         return ResponseEntity.ok(new MessageResponse("Stanje zadatka izmjenjeno!"));
     }
+
+    @CrossOrigin("*")
+    @PostMapping("/getProjektZadaciNezavrseniRok")
+    public ResponseEntity<?> getProjektZadaciNezavrseniRok(@RequestBody TraziDateDTO dto) {
+        List<ZadatakInfoDTO> zadaci = new ArrayList<>();
+
+        for (Zadatak z : zadatakService.getProjektZadaciRokIzvrsavanja(Long.parseLong(dto.getId()), dto.getDatum())) {
+            if (z.getStanje().getIdStanja() != Long.parseLong("3")) {
+                List<Zahtjev> zahtjevHistory = zahtjevService.findChangeHistory(z.getIdZahtjeva());
+                Zahtjev najnoviji = zahtjevHistory.get(0);
+                for (Zahtjev zah : zahtjevHistory) {
+                    if (najnoviji.getIdZahtjeva().getDatumKreiranja().before(zah.getIdZahtjeva().getDatumKreiranja())) {
+                        najnoviji = zah;
+                    }
+                }
+
+                zadaci.add(new ZadatakInfoDTO(
+                        z.getIdZadatka(),
+                        z.getNazivZadatka(),
+                        z.getOpisZadatka(),
+                        z.getDatumStvaranjaZadatka(),
+                        z.getRokIzvrsavanja(),
+                        z.getDatumStvarnogIzvrsavanja(),
+                        z.getVrstaZadatka(),
+                        z.getStanje(),
+                        z.getPrioritet(),
+                        z.getIzvrsitelj().getIdKorisnika(),
+                        z.getIzvrsitelj().getIme(),
+                        z.getIzvrsitelj().getPrezime(),
+                        sudjelujeNaService.findUloga(z.getIzvrsitelj().getIdKorisnika(), z.getProjekt().getIdProjekta()).getNazivUloge(),
+                        najnoviji.getNazivZahtjeva()
+                ));
+            }
+        }
+
+        return ResponseEntity.ok(zadaci);
+    }
+
+    @CrossOrigin("*")
+    @PostMapping("/getProjektZadaciZavrseniNaDatum")
+    public ResponseEntity<?> getProjektZadaciZavrseniNaDatum(@RequestBody TraziDateDTO dto) {
+        List<ZadatakInfoDTO> zadaci = new ArrayList<>();
+
+        for (Zadatak z : zadatakService.getProjektZadaciStvarnoIzvrsavanje(Long.parseLong(dto.getId()), dto.getDatum())) {
+            List<Zahtjev> zahtjevHistory = zahtjevService.findChangeHistory(z.getIdZahtjeva());
+            Zahtjev najnoviji = zahtjevHistory.get(0);
+            for (Zahtjev zah : zahtjevHistory) {
+                if (najnoviji.getIdZahtjeva().getDatumKreiranja().before(zah.getIdZahtjeva().getDatumKreiranja())) {
+                    najnoviji = zah;
+                }
+            }
+
+            zadaci.add(new ZadatakInfoDTO(
+                    z.getIdZadatka(),
+                    z.getNazivZadatka(),
+                    z.getOpisZadatka(),
+                    z.getDatumStvaranjaZadatka(),
+                    z.getRokIzvrsavanja(),
+                    z.getDatumStvarnogIzvrsavanja(),
+                    z.getVrstaZadatka(),
+                    z.getStanje(),
+                    z.getPrioritet(),
+                    z.getIzvrsitelj().getIdKorisnika(),
+                    z.getIzvrsitelj().getIme(),
+                    z.getIzvrsitelj().getPrezime(),
+                    sudjelujeNaService.findUloga(z.getIzvrsitelj().getIdKorisnika(), z.getProjekt().getIdProjekta()).getNazivUloge(),
+                    najnoviji.getNazivZahtjeva()
+            ));
+        }
+
+        return ResponseEntity.ok(zadaci);
+    }
+
 }

@@ -6,6 +6,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
 import zavrsni.devopstrk.model.Zadatak;
 
+import java.sql.Date;
 import java.util.List;
 
 @Transactional
@@ -31,4 +32,8 @@ public interface ZadatakRepository extends JpaRepository<Zadatak, Long> {
     int findBrojNezavrsenih(@Param("idZahtjeva") String idZahtjeva);
 
     List<Zadatak> findByProjekt_IdProjektaAndIzvrsitelj_IdKorisnika(Long idProjekta, Long idKorisnika);
+
+    List<Zadatak> findByProjekt_IdProjektaAndRokIzvrsavanja(Long idProjekta, Date rokIzvrsavanja);
+
+    List<Zadatak> findByProjekt_IdProjektaAndDatumStvarnogIzvrsavanja(Long idProjekta, Date datumStvarnogIzvrsavanja);
 }

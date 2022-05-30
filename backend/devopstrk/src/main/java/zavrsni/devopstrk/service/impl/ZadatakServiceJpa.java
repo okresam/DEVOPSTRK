@@ -6,6 +6,7 @@ import zavrsni.devopstrk.model.Zadatak;
 import zavrsni.devopstrk.repository.ZadatakRepository;
 import zavrsni.devopstrk.service.ZadatakService;
 
+import java.sql.Date;
 import java.util.List;
 
 @Service
@@ -67,5 +68,15 @@ public class ZadatakServiceJpa implements ZadatakService {
     @Override
     public List<Zadatak> getMojiZadaciNaProjektu(Long idProjekta, Long idKorisnika) {
         return zadatakRepository.findByProjekt_IdProjektaAndIzvrsitelj_IdKorisnika(idProjekta, idKorisnika);
+    }
+
+    @Override
+    public List<Zadatak> getProjektZadaciRokIzvrsavanja(Long idProjekta, Date rokIzvrsavanja) {
+        return zadatakRepository.findByProjekt_IdProjektaAndRokIzvrsavanja(idProjekta, rokIzvrsavanja);
+    }
+
+    @Override
+    public List<Zadatak> getProjektZadaciStvarnoIzvrsavanje(Long idProjekta, Date datumStavrnogIzvrsavanja) {
+        return zadatakRepository.findByProjekt_IdProjektaAndDatumStvarnogIzvrsavanja(idProjekta, datumStavrnogIzvrsavanja);
     }
 }

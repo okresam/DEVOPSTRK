@@ -7,6 +7,25 @@
                     <h3>Zadaci</h3>
                 </div>
                 <hr />
+                <div>
+                    <button 
+                        class="my-5 px-6 py-2 mx-5 text-white bg-blue-600 rounded-lg hover:bg-blue-900"
+                        type="button" @click="showSvi">
+                        Svi zadaci
+                    </button>
+                    <input type="date" v-model="datum"
+                        class="px-4 py-2 mt-2 bg-gray-200 border rounded-md focus:outline-none focus:ring-1 focus:ring-blue-600" />
+                    <button 
+                        class="my-5 px-6 py-2 ml-5 text-white bg-blue-600 rounded-lg hover:bg-blue-900"
+                        type="button" @click="showNezavrseniDoRoka">
+                        Nezavršeni do roka
+                    </button>
+                    <button 
+                        class="my-5 px-6 py-2 ml-5 text-white bg-blue-600 rounded-lg hover:bg-blue-900"
+                        type="button" @click="showZavrseniNaDatum">
+                        Završeni na datum
+                    </button>
+                </div>
                 <div class="text-center mt-5">
                     <input type="text" placeholder="Pretraži..." v-model="pretraziValue" v-on:input="pretrazi"
                         class="w-1/2 px-4 py-2 mt-2 bg-gray-200 border rounded-md focus:outline-none focus:ring-1 focus:ring-blue-600" />
@@ -132,13 +151,15 @@ export default {
             },
             showUredi: false,
             vrsteZadataka: [],
-            prioriteti: []
+            prioriteti: [],
+            datum: ''
         }
     },
     async mounted() {
         this.zadaci = await RequestHandler.postRequest(SPRING_URL.concat("/zadatak/getProjektZadaci"), { "id": this.$store.state.trenutniProjekt.idProjekta.toString() })
         this.vrsteZadataka = await RequestHandler.getRequest(SPRING_URL.concat("/vrstazadatka/all"))
         this.prioriteti = await RequestHandler.getRequest(SPRING_URL.concat("/prioritet/all"))
+        this.datum = new Date().toISOString().slice(0, 10)
     },
     methods: {
         async pretrazi() {
@@ -163,6 +184,15 @@ export default {
         async posaljiPromjenu() {
             await RequestHandler.postRequest(SPRING_URL.concat("/zadatak/edit"), this.editZadatak)
             this.$router.go()
+        },
+        async showSvi() {
+            this.zadaci = await RequestHandler.postRequest(SPRING_URL.concat("/zadatak/getProjektZadaci"), { "id": this.$store.state.trenutniProjekt.idProjekta.toString() })
+        },
+        async showNezavrseniDoRoka() {
+            this.zadaci = await RequestHandler.postRequest(SPRING_URL.concat("/zadatak/getProjektZadaciNezavrseniRok"), { "id": this.$store.state.trenutniProjekt.idProjekta.toString(), "datum": this.datum })
+        },
+        async showZavrseniNaDatum() {
+            this.zadaci = await RequestHandler.postRequest(SPRING_URL.concat("/zadatak/getProjektZadaciZavrseniNaDatum"), { "id": this.$store.state.trenutniProjekt.idProjekta.toString(), "datum": this.datum })
         }
     }
 }

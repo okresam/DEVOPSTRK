@@ -152,9 +152,9 @@
                                         </thead>
 
                                         <tbody>
-                                            <tr v-for="z in zahtjevZadaci"
+                                            <tr v-for="(z, index) in zahtjevZadaci"
                                                 class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-                                                <td>{{ z.nazivZadatka }}</td>
+                                                <td class="hover:text-gray-400 hover:cursor-pointer" @click="zadDetailView(index)">{{ z.nazivZadatka }}</td>
                                                 <td>{{ z.datumStvaranjaZadatka }}</td>
                                                 <td>{{ z.datumStvarnogIzvrsavanja }}</td>
                                                 <td>{{ z.imeIzvrsitelja }} {{ z.prezimeIzvrsitelja }} ({{
@@ -263,6 +263,64 @@
 
             </div>
 
+            <div v-else-if="zahtjeviPage === 4">
+                <div class="flex flex-auto items-center justify-center min-h-screen bg-gray-300">
+                    <div class="px-8 py-6 mt-4 text-left bg-white shadow-lg">
+                        <h3 class="text-2xl text-center">Promjeni zadatak!</h3>
+                        <form @submit.prevent="urediZadatak">
+                            <div class="mt-4">
+                                <div>
+                                    <label class="block" for="nazivZadatka">Naziv zadatka</label>
+                                    <input v-model="editZadatak.nazivZadatka" type="text" required
+                                        oninvalid="this.setCustomValidity('Ovo polje je obavezno!')"
+                                        oninput="this.setCustomValidity('')"
+                                        class="w-full px-4 py-2 mt-2 border rounded-md focus:outline-none focus:ring-1 focus:ring-blue-600">
+                                </div>
+                                <div class="mt-4">
+                                    <label class="block" for="opisZadatka">Opis zadatka</label>
+                                    <input v-model="editZadatak.opisZadatka" type="text" required
+                                        oninvalid="this.setCustomValidity('Ovo polje je obavezno!')"
+                                        oninput="this.setCustomValidity('')"
+                                        class="w-full px-4 py-2 mt-2 border rounded-md focus:outline-none focus:ring-1 focus:ring-blue-600">
+                                </div>
+                                <div class="mt-4">
+                                    <label class="block" for="rokIzvrsavanja">Rok izvršavanja</label>
+                                    <input v-model="editZadatak.rokIzvrsavanja" type="date" required
+                                        oninvalid="this.setCustomValidity('Ovo polje je obavezno!')"
+                                        oninput="this.setCustomValidity('')"
+                                        class="w-full px-4 py-2 mt-2 border rounded-md focus:outline-none focus:ring-1 focus:ring-blue-600">
+                                </div>
+                                <div class="mt-4 text-center">
+                                    <label class="block" for="vrstaZadatka">Vrsta zadatka</label>
+                                    <select v-model="editZadatak.idVrsteZadatka">
+                                        <option v-for="v in vrsteZadataka" :value="v.idVrsteZadatka"
+                                         :selected="v.idVrsteZadatka === this.editZadatak.idVrsteZadatka">{{ v.nazivVrsteZadatka }}
+                                        </option>
+                                    </select>
+                                </div>
+                                <div class="mt-4 text-center">
+                                    <label class="block" for="prioritet">Prioritet</label>
+                                    <select v-model="editZadatak.idPrioriteta">
+                                        <option v-for="p in prioriteti" :value="p.idPrioriteta"
+                                         :selected="p.idPrioriteta === this.editZadatak.idPrioriteta">{{ p.nazivPrioriteta }}
+                                        </option>
+                                    </select>
+                                </div>
+                                <div class="flex items-baseline justify-between">
+                                    <p class="px-6 py-2 mt-4 text-white bg-gray-600 rounded-lg hover:bg-gray-900 hover:cursor-pointer"
+                                        @click="zahtjeviPage = 3">
+                                        Natrag
+                                    </p>
+                                    <button class="px-6 py-2 mt-4 text-white bg-cyan-600 rounded-lg hover:bg-cyan-900">
+                                        Promjeni
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
         </div>
     </div>
 </template>
@@ -302,7 +360,14 @@ export default {
             prioriteti: [],
             moguciIzvrsitelji: [],
             brojZavrsenihZad: [],
-            brojNezavrsenihZad: []
+            brojNezavrsenihZad: [],
+            editZadatak: {
+                nazivZadatka: '',
+                opisZadatka: '',
+                rokIzvrsavanja: '',
+                idVrsteZadatka: '',
+                idPrioriteta: ''
+            }
         }
     },
     async mounted() {
@@ -383,6 +448,20 @@ export default {
                 await RequestHandler.postRequest(SPRING_URL.concat("/zahtjev/delete"), { "id": this.zahtjevi[i].idZahtjeva })
                 this.$router.go()
             }
+        },
+        async zadDetailView(i) {
+            this.zahtjeviPage = 4
+            this.editZadatak.idZadatka = this.zahtjevZadaci[i].idZadatka.toString()
+            this.editZadatak.nazivZadatka = this.zahtjevZadaci[i].nazivZadatka
+            this.editZadatak.opisZadatka = this.zahtjevZadaci[i].opisZadatka
+            this.editZadatak.rokIzvrsavanja = this.zahtjevZadaci[i].rokIzvrsavanja
+            this.editZadatak.idPrioriteta = this.zahtjevZadaci[i].prioritet.idPrioriteta.toString()
+            this.editZadatak.idVrsteZadatka = this.zahtjevZadaci[i].vrstaZadatka.idVrsteZadatka.toString()
+        },
+        async urediZadatak() {
+            await RequestHandler.postRequest(SPRING_URL.concat("/zadatak/edit"), this.editZadatak)
+            this.zahtjevZadaci = await RequestHandler.postRequest(SPRING_URL.concat("/zadatak/getZahtjevZadaci"), { "id": this.zahtjevDetails.idZahtjeva })
+            this.zahtjeviPage = 3
         }
     }
 }
