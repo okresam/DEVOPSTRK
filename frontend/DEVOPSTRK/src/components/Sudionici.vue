@@ -49,7 +49,7 @@
             <hr />
             <button v-if="$store.state.user.idKorisnika === $store.state.trenutniProjekt.idVoditelja" @click="showDodaj = true"
                 class="px-6 py-2 my-4 mx-5 text-white bg-blue-600 rounded-lg hover:bg-blue-900">Dodaj sudionika</button>
-            <table class="table-auto w-1/3 text-lg text-left text-gray-600 mx-20 my-5">
+            <table class="table-auto w-2/3 text-lg text-left text-gray-600 mx-20 my-5">
                 <thead class="text-lg text-gray-700 uppercase bg-gray-50">
                     <tr>
                         <th>Sudionik</th>

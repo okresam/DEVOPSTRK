@@ -22,6 +22,11 @@
                         <router-link to="/Uloge" class="hover:text-gray-800">Uloge</router-link>
                     </div>
                 </div>
+                <div class="p-2 mx-5">
+                    <div class="flex flex-row">
+                        <router-link to="/Prioriteti" class="hover:text-gray-800">Prioriteti</router-link>
+                    </div>
+                </div>
                 <div v-if="$store.state.trenutniProjekt">
                     <div class="p-2 mx-5 mt-5">
                         <div class="flex flex-row bg-cyan-700 rounded-lg">
