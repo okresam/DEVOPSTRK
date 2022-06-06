@@ -41,7 +41,7 @@ public class ProjektController {
 
     @CrossOrigin("*")
     @PostMapping("/add")
-    public ResponseEntity<?> createKorisnik(@RequestBody CreateProjektDTO dto) {
+    public ResponseEntity<?> createProjekt(@RequestBody CreateProjektDTO dto) {
         Korisnik voditelj = korisnikService.fetch(dto.getEmailVoditelja()).get();
 
         Projekt projekt = new Projekt(

@@ -10,4 +10,10 @@ public interface PrioritetService {
     List<Prioritet> listAll();
 
     Optional<Prioritet> findById(Long idPrioriteta);
+
+    void deleteById(Long idPrioriteta);
+
+    void updatePrioritet(Prioritet prioritet);
+
+    Prioritet createPrioritet(Prioritet prioritet);
 }

@@ -10,4 +10,10 @@ public interface UlogaService {
     List<Uloga> listAll();
 
     Optional<Uloga> findById(Long idUloge);
+
+    void deleteById(Long idUloge);
+
+    void updateUloga(Uloga uloga);
+
+    Uloga createUloga(Uloga uloga);
 }

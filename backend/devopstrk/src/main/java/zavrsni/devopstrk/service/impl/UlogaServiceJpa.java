@@ -25,4 +25,19 @@ public class UlogaServiceJpa implements UlogaService {
     public Optional<Uloga> findById(Long idUloge) {
         return ulogaRepository.findById(idUloge);
     }
+
+    @Override
+    public void deleteById(Long idUloge) {
+        ulogaRepository.deleteByIdUloge(idUloge);
+    }
+
+    @Override
+    public void updateUloga(Uloga uloga) {
+        ulogaRepository.save(uloga);
+    }
+
+    @Override
+    public Uloga createUloga(Uloga uloga) {
+        return ulogaRepository.save(uloga);
+    }
 }

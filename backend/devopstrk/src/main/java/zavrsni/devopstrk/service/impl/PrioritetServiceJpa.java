@@ -24,4 +24,19 @@ public class PrioritetServiceJpa implements PrioritetService {
     public Optional<Prioritet> findById(Long idPrioriteta) {
         return prioritetRepository.findById(idPrioriteta);
     }
+
+    @Override
+    public void deleteById(Long idPrioriteta) {
+        prioritetRepository.deleteByIdPrioriteta(idPrioriteta);
+    }
+
+    @Override
+    public void updatePrioritet(Prioritet prioritet) {
+        prioritetRepository.save(prioritet);
+    }
+
+    @Override
+    public Prioritet createPrioritet(Prioritet prioritet) {
+        return prioritetRepository.save(prioritet);
+    }
 }
